@@ -31,4 +31,7 @@ public class Task {
     private Date createTime;
 
     private Date updateTime;
+
+    private Integer userId;
+
 }

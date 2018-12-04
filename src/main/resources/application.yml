@@ -9,3 +9,5 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+app:
+  secret: 07ab4387efa80cc76b9ab2123cf34bf53b52a6cb

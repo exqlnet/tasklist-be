@@ -9,7 +9,7 @@ public class MD5UtilTest {
     @Test
     public void md5() {
         MD5Util md5Util = new MD5Util();
-        String res = md5Util.md5("hello world");
+        String res = md5Util.md5("123456");
         System.out.println(res);
     }
 }

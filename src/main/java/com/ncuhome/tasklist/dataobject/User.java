@@ -13,18 +13,16 @@ import javax.persistence.Id;
 @Data
 public class User {
 
-    @Autowired
-    MD5Util md5Util;
-
     @Id
     @GeneratedValue
-    private Integer user_id;
+    private Integer userId;
 
     private String password;
 
     private String email;
 
     void setPassword(String pwd){
+        MD5Util md5Util = new MD5Util();
         password = md5Util.md5(pwd);
     }
 }
