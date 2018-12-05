@@ -1,14 +1,16 @@
 package com.ncuhome.tasklist.service;
 
 import com.ncuhome.tasklist.VO.LoginResult;
+import com.ncuhome.tasklist.VO.ResultVO;
 import com.ncuhome.tasklist.dataobject.User;
-import com.ncuhome.tasklist.form.LoginForm;
+import com.ncuhome.tasklist.form.UserForm.ChangePasswordForm;
+import com.ncuhome.tasklist.form.UserForm.LoginForm;
 
 
 public interface UserService {
 
-    LoginResult checkPassword(LoginForm loginForm);
+    LoginResult login(LoginForm loginForm);
 
-    User changePassword(String email, String pwdHashBefore, String pwd);
+    String changePassword(ChangePasswordForm changePasswordForm);
 
 }

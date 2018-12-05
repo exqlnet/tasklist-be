@@ -1,4 +1,4 @@
-package com.ncuhome.tasklist.form;
+package com.ncuhome.tasklist.form.UserForm;
 
 
 import lombok.Data;

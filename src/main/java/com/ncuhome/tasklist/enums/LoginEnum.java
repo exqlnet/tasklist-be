@@ -8,7 +8,8 @@ public enum LoginEnum {
     SUCCESS(1, "登陆成功"),
     USER_NOT_FOUND(2, "用户未找到"),
     PWD_INCORRECT(3, "密码错误"),
-    USER_NOT_AUTH(4, "未认证");
+    USER_NOT_AUTH(4, "未认证"),
+    PWD_BEFORE_INCORRECT(5, "原密码错误");
 
     private Integer code;
 

@@ -1,11 +1,11 @@
 package com.ncuhome.tasklist.service.impl;
 
 import com.ncuhome.tasklist.VO.LoginResult;
-import com.ncuhome.tasklist.VO.ResultVO;
 import com.ncuhome.tasklist.dataobject.User;
 import com.ncuhome.tasklist.enums.LoginEnum;
 import com.ncuhome.tasklist.exception.UserLoginException;
-import com.ncuhome.tasklist.form.LoginForm;
+import com.ncuhome.tasklist.form.UserForm.ChangePasswordForm;
+import com.ncuhome.tasklist.form.UserForm.LoginForm;
 import com.ncuhome.tasklist.repository.UserRepository;
 import com.ncuhome.tasklist.service.UserService;
 import com.ncuhome.tasklist.util.MD5Util;
@@ -35,26 +35,37 @@ public class UserServiceImpl implements UserService {
     private String secret;
 
     @Override
-    public LoginResult checkPassword(LoginForm loginForm) {
+    public LoginResult login(LoginForm loginForm) {
         User user = userRepository.findByEmail(loginForm.getEmail());
-        log.info("{}", loginForm);
-        log.info("{}", user);
 
-        if(user == null){
-            throw new UserLoginException(LoginEnum.USER_NOT_FOUND);
-        }
-        if(!md5Util.md5(loginForm.getPassword()).equals(user.getPassword())){
-            throw new UserLoginException(LoginEnum.PWD_INCORRECT);
-        }
-        else{
-            return new LoginResult(generateToken(user));
-        }
+        // 用户是否存在
+        if (user == null) throw new UserLoginException(LoginEnum.USER_NOT_FOUND);
+
+        if(checkPassword(user, loginForm.getPassword()))
+        return new LoginResult(generateToken(user));
+        else throw new UserLoginException(LoginEnum.PWD_INCORRECT);
     }
 
     @Override
-    public User changePassword(String email, String pwdHashBefore, String pwd) {
+    public String changePassword(ChangePasswordForm changePasswordForm) {
+        User user = userRepository.findByEmail(changePasswordForm.getEmail());
+        if (user == null){
+            throw new UserLoginException(LoginEnum.USER_NOT_FOUND);
+        }
 
-        return null;
+        if(checkPassword(user, changePasswordForm.getPwdBefore())){
+            user.setPassword(changePasswordForm.getPwdNew());
+        }
+        else{
+            throw new UserLoginException(LoginEnum.PWD_BEFORE_INCORRECT);
+        }
+
+
+        return "修改成功";
+    }
+
+    public Boolean checkPassword(User user, String pwd){
+        return md5Util.md5(pwd).equals(user.getPassword());
     }
 
     public String generateToken(User user){

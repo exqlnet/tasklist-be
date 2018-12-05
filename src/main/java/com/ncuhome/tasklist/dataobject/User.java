@@ -21,7 +21,7 @@ public class User {
 
     private String email;
 
-    void setPassword(String pwd){
+    public void setPassword(String pwd){
         MD5Util md5Util = new MD5Util();
         password = md5Util.md5(pwd);
     }
