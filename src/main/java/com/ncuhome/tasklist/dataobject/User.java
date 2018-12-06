@@ -19,6 +19,12 @@ public class User {
 
     private String password;
 
+    private String username;
+
+    private String description;
+
+    private String avatarPicName;
+
     private String email;
 
     public void setPassword(String pwd){

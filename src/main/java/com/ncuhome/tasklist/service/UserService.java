@@ -13,4 +13,6 @@ public interface UserService {
 
     String changePassword(ChangePasswordForm changePasswordForm);
 
+    User verifyToken(String token);
+
 }
