@@ -7,3 +7,5 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/tasklist
+    ports:
+      - "6666:6666"
