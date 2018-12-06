@@ -14,5 +14,4 @@ spring:
 app:
   secret: 07ab4387efa80cc76b9ab2123cf34bf53b52a6cb
 server:
-  port: 6666
-  address: 0.0.0.0
+  port: 6789

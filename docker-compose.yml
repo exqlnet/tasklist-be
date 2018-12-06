@@ -8,4 +8,4 @@ services:
     volumes:
       - .:/tasklist
     ports:
-      - "6666:6666"
+      - "6789:6789"
