@@ -11,7 +11,7 @@ public interface UserService {
 
     LoginResult login(LoginForm loginForm);
 
-    String changePassword(ChangePasswordForm changePasswordForm);
+    String changePassword(User user, ChangePasswordForm changePasswordForm);
 
     User verifyToken(String token);
 

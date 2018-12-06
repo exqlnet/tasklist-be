@@ -9,9 +9,6 @@ import javax.validation.Valid;
 public class ChangePasswordForm {
 
     @Valid
-    private String email;
-
-    @Valid
     private String pwdBefore;
 
     @Valid

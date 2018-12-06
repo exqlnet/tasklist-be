@@ -47,11 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String changePassword(ChangePasswordForm changePasswordForm) {
-        User user = userRepository.findByEmail(changePasswordForm.getEmail());
-        if (user == null){
-            throw new UserLoginException(LoginEnum.USER_NOT_FOUND);
-        }
+    public String changePassword(User user, ChangePasswordForm changePasswordForm) {
 
         if(checkPassword(user, changePasswordForm.getPwdBefore())){
             user.setPassword(changePasswordForm.getPwdNew());

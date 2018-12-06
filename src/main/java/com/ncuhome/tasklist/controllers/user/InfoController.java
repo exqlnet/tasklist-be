@@ -1,11 +1,9 @@
 package com.ncuhome.tasklist.controllers.user;
 
-import com.ncuhome.tasklist.VO.LoginResult;
 import com.ncuhome.tasklist.VO.ResultVO;
+import com.ncuhome.tasklist.VO.UserVO;
 import com.ncuhome.tasklist.annotations.LoginRequired;
-import com.ncuhome.tasklist.dataobject.User;
 import com.ncuhome.tasklist.form.UserForm.ChangePasswordForm;
-import com.ncuhome.tasklist.form.UserForm.LoginForm;
 import com.ncuhome.tasklist.service.UserService;
 import com.ncuhome.tasklist.util.BaseController;
 import com.ncuhome.tasklist.util.ResultVOUtil;
@@ -27,7 +25,7 @@ public class InfoController extends BaseController {
     @PostMapping("/changePassword")
     @LoginRequired
     public ResultVO changePassword(@RequestBody @Valid ChangePasswordForm changePasswordForm){
-        userService.changePassword(changePasswordForm);
+        userService.changePassword(getUser(), changePasswordForm);
         return ResultVOUtil.success("修改成功");
     }
 
@@ -35,6 +33,7 @@ public class InfoController extends BaseController {
     @GetMapping("/info")
     @LoginRequired
     public ResultVO getInfo(){
-        return ResultVOUtil.success(getUser().getEmail());
+        UserVO userVO = new UserVO(getUser());
+        return ResultVOUtil.success(userVO);
     }
 }

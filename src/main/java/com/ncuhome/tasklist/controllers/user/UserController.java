@@ -26,5 +26,4 @@ public class UserController {
         LoginResult loginResult = userService.login(loginForm);
         return ResultVOUtil.success(loginResult);
     }
-
 }
