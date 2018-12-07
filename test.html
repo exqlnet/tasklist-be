@@ -6,14 +6,15 @@
 	</title>
 	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
 	<script type="text/javascript">
-			function req() {
-	$.ajax({
-		url: "http://www.todobest.tk/api/user/login",
-		data: JSON.stringify({email: "ncuhome@qq.com", password: "123456"}),
-		contentType: "application/json",
-		type: "post"
-	})		// body...
-	}
+        function req() {
+            $.ajax({
+                url: "http://www.todobest.tk/api/user/register",
+                data: JSON.stringify({email: "327619852@qq.com", password: "123456", verifyCode: "123456"}),
+                contentType: "application/json",
+                type: "post"
+                // 327619852@qq.com
+            })		// body...
+        }
 	</script>
 </head>
 <body>
