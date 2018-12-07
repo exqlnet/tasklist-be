@@ -80,6 +80,8 @@ public class UserServiceImpl implements UserService {
             throw new UserRegisterException("验证码错误");
 
         User user = new User(registerForm.getEmail(), registerForm.getPassword());
+
+        emailSendRepository.delete(emailSend);
         userRepository.save(user);
 
         return "注册成功";

@@ -37,9 +37,6 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 //        ObjectMapper mapper = new ObjectMapper();
 //        JsonNode requestBody = mapper.readTree(postData);
 //        request.setAttribute("body", requestBody);
-//
-//        log.info("{}", requestBody.get("email").asText());
-//
 
 
         // 判断接口是否需要登录

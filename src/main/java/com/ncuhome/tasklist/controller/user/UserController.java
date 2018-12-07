@@ -7,6 +7,7 @@ import com.ncuhome.tasklist.VO.ResultVO;
 import com.ncuhome.tasklist.form.UserForm.ChangePasswordForm;
 import com.ncuhome.tasklist.form.UserForm.LoginForm;
 import com.ncuhome.tasklist.form.UserForm.RegisterForm;
+import com.ncuhome.tasklist.form.UserForm.SendVcodeForm;
 import com.ncuhome.tasklist.service.EmailService;
 import com.ncuhome.tasklist.service.UserService;
 import com.ncuhome.tasklist.util.BaseController;
@@ -36,14 +37,19 @@ public class UserController extends BaseController {
         return ResultVOUtil.success(loginResult);
     }
 
-//    @PostMapping("/sendVcode")
-//    public Object sendVcode(@RequestBody String email){
+    @PostMapping("/sendVcode")
+    public Object sendVcode(@RequestBody SendVcodeForm sendVcodeForm){
+        /*
+            body:
+                email : String
+        */
+
 //        JsonNode body = getBody();
-//        email = body.get("email").asText();
-//
-//        emailService.sendVerifyCode(email);
-//        return ResultVOUtil.success("ok");
-//    }
+//        String email = body.get("email").asText();
+        String email = sendVcodeForm.getEmail();
+        emailService.sendVerifyCode(email);
+        return ResultVOUtil.success("ok");
+    }
 
     @PostMapping("/register")
     public Object registerAccount(@RequestBody @Valid RegisterForm registerForm){

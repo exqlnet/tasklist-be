@@ -8,6 +8,7 @@ import com.ncuhome.tasklist.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.validation.constraints.Email;
 import java.util.Random;
 
 @Service
@@ -26,9 +27,16 @@ public class EmailServiceImpl implements EmailService {
         // 检查邮件格式并发送邮件
         // TODO
         // 将验证码存入数据库
-        String verifyCode = "666666";
-        EmailSend emailSend = new EmailSend(address, verifyCode);
-        emailSendRepository.save(emailSend);
+        EmailSend check = emailSendRepository.findByEmail(address);
+        if (check != null){
+            check.setVerifyCode("123456");
+            emailSendRepository.save(check);
+        }
+        else{
+            String verifyCode = "666666";
+            EmailSend emailSend = new EmailSend(address, verifyCode);
+            emailSendRepository.save(emailSend);
+        }
         return true;
     }
 }

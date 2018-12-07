@@ -26,4 +26,7 @@ public class EmailSend {
         this.email = email;
         this.verifyCode = verifyCode;
     }
+    public EmailSend(){
+
+    }
 }
