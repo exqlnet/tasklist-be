@@ -31,10 +31,21 @@ public class User{
     private String email;
 
     public void setPassword(String pwd){
-        MD5Util md5Util = new MD5Util();
-        password = md5Util.md5(pwd);
+        password = MD5Util.md5(pwd);
     }
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @JoinColumn(name="userId", referencedColumnName = "userId")
     private List<Task> tasks;
+
+    public User(String email, String password) {
+        this.password = MD5Util.md5(password);
+        this.email = email;
+        this.description = "这个人很懒，什么都没有留下。";
+        this.username = "沙雕壹号";
+        this.avatarPicName = "avatar_default.jpg";
+    }
+
+    public User(){
+    }
 }

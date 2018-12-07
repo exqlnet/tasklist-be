@@ -2,13 +2,14 @@ package com.ncuhome.tasklist.dataobject;
 
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.Date;
 
-@Entity
 @Data
+@Entity
 public class EmailSend {
 
     @Id
@@ -19,4 +20,10 @@ public class EmailSend {
 
     private String verifyCode;
 
+    private Date createTime = new Date(System.currentTimeMillis());
+
+    public EmailSend(String email, String verifyCode) {
+        this.email = email;
+        this.verifyCode = verifyCode;
+    }
 }

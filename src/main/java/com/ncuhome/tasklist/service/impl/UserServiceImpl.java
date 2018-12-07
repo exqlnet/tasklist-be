@@ -1,11 +1,15 @@
 package com.ncuhome.tasklist.service.impl;
 
 import com.ncuhome.tasklist.VO.LoginResult;
+import com.ncuhome.tasklist.dataobject.EmailSend;
 import com.ncuhome.tasklist.dataobject.User;
 import com.ncuhome.tasklist.enums.LoginEnum;
 import com.ncuhome.tasklist.exception.UserLoginException;
+import com.ncuhome.tasklist.exception.UserRegisterException;
 import com.ncuhome.tasklist.form.UserForm.ChangePasswordForm;
 import com.ncuhome.tasklist.form.UserForm.LoginForm;
+import com.ncuhome.tasklist.form.UserForm.RegisterForm;
+import com.ncuhome.tasklist.repository.EmailSendRepository;
 import com.ncuhome.tasklist.repository.UserRepository;
 import com.ncuhome.tasklist.service.UserService;
 import com.ncuhome.tasklist.util.MD5Util;
@@ -30,6 +34,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     MD5Util md5Util;
+
+    @Autowired
+    EmailSendRepository emailSendRepository;
 
     @Value("${app.secret}")
     private String secret;
@@ -61,7 +68,22 @@ public class UserServiceImpl implements UserService {
         return "修改成功";
     }
 
+    @Override
+    public String register(RegisterForm registerForm) {
+        EmailSend emailSend = emailSendRepository.findByEmail(registerForm.getEmail());
 
+        if(emailSend == null){
+            throw new UserRegisterException("error submitted info");
+        }
+
+        if(!registerForm.getVerifyCode().equals(emailSend.getVerifyCode()))
+            throw new UserRegisterException("验证码错误");
+
+        User user = new User(registerForm.getEmail(), registerForm.getPassword());
+        userRepository.save(user);
+
+        return "注册成功";
+    }
 
     public Boolean checkPassword(User user, String pwd){
         return md5Util.md5(pwd).equals(user.getPassword());

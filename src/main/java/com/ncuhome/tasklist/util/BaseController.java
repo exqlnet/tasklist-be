@@ -1,6 +1,8 @@
 package com.ncuhome.tasklist.util;
 
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.google.gson.JsonObject;
 import com.ncuhome.tasklist.dataobject.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,6 +16,10 @@ public class BaseController {
 
     protected User getUser(){
         return (User) request.getAttribute("user");
+    }
+
+    protected JsonNode getBody(){
+        return (JsonNode) request.getAttribute("body");
     }
 
 }
