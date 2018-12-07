@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService {
 
         if(checkPassword(user, changePasswordForm.getPwdBefore())){
             user.setPassword(changePasswordForm.getPwdNew());
+            userRepository.save(user);
         }
         else{
             throw new UserLoginException(LoginEnum.PWD_BEFORE_INCORRECT);
@@ -59,6 +60,8 @@ public class UserServiceImpl implements UserService {
 
         return "修改成功";
     }
+
+
 
     public Boolean checkPassword(User user, String pwd){
         return md5Util.md5(pwd).equals(user.getPassword());

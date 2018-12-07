@@ -1,4 +1,4 @@
-package com.ncuhome.tasklist.controllers.user;
+package com.ncuhome.tasklist.controller.user;
 
 import com.ncuhome.tasklist.VO.ResultVO;
 import com.ncuhome.tasklist.VO.UserVO;

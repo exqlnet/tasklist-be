@@ -1,12 +1,15 @@
 package com.ncuhome.tasklist.dataobject;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.ncuhome.tasklist.enums.TaskTypeEnum;
+import com.ncuhome.tasklist.exception.TaskException;
+import com.ncuhome.tasklist.form.TaskForm.CreateTaskForm;
+import com.ncuhome.tasklist.form.TaskForm.ModifyTaskForm;
 import lombok.Data;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnJava;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -24,14 +27,76 @@ public class Task {
 
     private Integer isFinish; // 1完成 0未完成
 
+    private Date finishTime; // 完成时间
+
+    // only use the
     private Date startTime;
 
     private Date endTime;
 
-    private Date createTime;
+    private Date createTime = new Date(System.currentTimeMillis());
 
-    private Date updateTime;
+    private Date updateTime = new Date(System.currentTimeMillis());
 
-    private Integer userId;
+    // week
+    private Integer weekday;
 
+    // month
+    private Integer monthday;
+
+    private Integer type;// 任务类型（周期）
+
+    // relationship
+    @ManyToOne
+    @JoinColumn(name="userId", referencedColumnName = "userId")
+    private User user;
+
+    // type:
+    // day : startTime endTime
+    // once: startTime endTime  or  null
+    // week:
+    // month:
+    // 1. 找出所有type=once的指定日期内的任务和所有type!=once的所有任务
+    // 2. 遍历任务，把任务到每一天，返回一个字典数据
+
+    public Task(CreateTaskForm createTaskForm){
+        title = createTaskForm.getTitle();
+        description = createTaskForm.getDescription();
+
+        if (createTaskForm.getType().equals(TaskTypeEnum.ONCE.getCode())){
+            type = TaskTypeEnum.ONCE.getCode();
+            startTime = createTaskForm.getStartTime();
+            endTime = createTaskForm.getEndTime();
+        }
+        else if (createTaskForm.getType().equals(TaskTypeEnum.DAY.getCode())){
+            // 不允许跨越两天
+//            if(createTaskForm.getStartTime().)
+            type = TaskTypeEnum.DAY.getCode();
+            startTime = createTaskForm.getStartTime();
+            endTime = createTaskForm.getEndTime();
+        }
+        else if (createTaskForm.getType().equals(TaskTypeEnum.WEEK.getCode())){
+            type = TaskTypeEnum.WEEK.getCode();
+            startTime = createTaskForm.getStartTime();
+            endTime = createTaskForm.getEndTime();
+            weekday = createTaskForm.getWeekday();
+            if (weekday <= 0 || weekday > 7){
+                throw new TaskException("weekday有误");
+            }
+        }
+        else if (createTaskForm.getType().equals(TaskTypeEnum.MONTH.getCode())){
+            type = TaskTypeEnum.WEEK.getCode();
+            startTime = createTaskForm.getStartTime();
+            endTime = createTaskForm.getEndTime();
+            monthday = createTaskForm.getMonthday();
+            if(monthday<=0 || monthday >=32){
+                throw new TaskException("monthday有误");
+            }
+        }
+        else throw new TaskException("error type");
+    }
+
+    public Boolean modify(ModifyTaskForm modifyTaskForm){
+        return true;
+    }
 }

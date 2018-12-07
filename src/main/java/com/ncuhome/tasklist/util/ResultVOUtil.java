@@ -1,5 +1,6 @@
 package com.ncuhome.tasklist.util;
 
+import com.google.gson.Gson;
 import com.ncuhome.tasklist.VO.ResultVO;
 import com.ncuhome.tasklist.enums.LoginEnum;
 import org.springframework.stereotype.Component;
