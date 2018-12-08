@@ -1,6 +1,7 @@
 package com.ncuhome.tasklist.service;
 
 import com.ncuhome.tasklist.VO.NoteVO;
+import com.ncuhome.tasklist.dataobject.Note;
 import com.ncuhome.tasklist.form.NoteForm.CreateNoteForm;
 import com.ncuhome.tasklist.form.NoteForm.ModifyNoteForm;
 
@@ -14,7 +15,7 @@ public interface NoteService {
 
     Boolean deleteNote(Integer noteId);
 
-    List<NoteVO> listNote();
+    List<Note> listNote();
 
-    NoteVO getNoteById(Integer noteId);
+    Note getNoteById(Integer noteId);
 }
