@@ -58,11 +58,7 @@ public class TaskController extends BaseController {
     @LoginRequired
     @GetMapping("/list")
     public Object listTask(){
-        log.info("{}", getUser().getTasks());
         List<Task> list = getUser().getTasks();
-        for(Task t :  list){
-            log.info("{}", t.getTaskId());
-        }
         return resultVOUtil.success(getUser().getTasks());
     }
 
