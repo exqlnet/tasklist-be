@@ -29,4 +29,6 @@ public class ModifyTaskForm{
 
     private String label;
 
+    private Integer priority;
+
 }

@@ -3,10 +3,12 @@ package com.ncuhome.tasklist.service.impl;
 import com.ncuhome.tasklist.VO.NoteVO;
 import com.ncuhome.tasklist.dataobject.Note;
 import com.ncuhome.tasklist.dataobject.User;
+import com.ncuhome.tasklist.exception.TaskException;
 import com.ncuhome.tasklist.form.NoteForm.CreateNoteForm;
 import com.ncuhome.tasklist.form.NoteForm.ModifyNoteForm;
 import com.ncuhome.tasklist.repository.NoteRepository;
 import com.ncuhome.tasklist.service.NoteService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Service
+@Slf4j
 public class NoteServiceImpl implements NoteService {
 
     @Autowired
@@ -36,6 +39,9 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public Boolean modifyNote(ModifyNoteForm modifyNoteForm) {
         Note note = noteRepository.findByNoteId(modifyNoteForm.getNoteId());
+        if(note == null){
+            throw new TaskException("未找到该便签");
+        }
         note.setContent(modifyNoteForm.getContent());
         noteRepository.save(note);
         return true;

@@ -20,14 +20,27 @@ public class Task {
     @GeneratedValue
     private Integer taskId;
 
-    private String title;
+    private String title; // 任务标题
 
     @Lob
-    private String description;
+    private String description; // 任务描述
 
     private Integer isFinish = 0; // 1完成 0未完成
 
     private Date finishTime; // 完成时间
+
+    private String label; // 标签：紧急、一般
+
+    private Integer priority; // 1紧急, 0一般;
+
+
+
+
+
+
+
+
+
 
     // only use the
     private Date startTime;
@@ -46,9 +59,7 @@ public class Task {
 
     private Integer type;// 任务类型（周期）
 
-    private String label; // 标签：紧急、一般
 
-    private Integer priority; // 优先级;
 
     // relationship
     @ManyToOne
