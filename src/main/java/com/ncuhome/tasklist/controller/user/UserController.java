@@ -31,10 +31,13 @@ public class UserController extends BaseController {
     @Autowired
     EmailService emailService;
 
+    @Autowired
+    ResultVOUtil resultVOUtil;
+
     @PostMapping("/login")
     public ResultVO<LoginResult> login(@RequestBody @Valid LoginForm loginForm){
         LoginResult loginResult = userService.login(loginForm);
-        return ResultVOUtil.success(loginResult);
+        return resultVOUtil.success(loginResult);
     }
 
     @PostMapping("/sendVcode")
@@ -48,12 +51,12 @@ public class UserController extends BaseController {
 //        String email = body.get("email").asText();
         String email = sendVcodeForm.getEmail();
         emailService.sendVerifyCode(email);
-        return ResultVOUtil.success("ok");
+        return resultVOUtil.success("发送成功！");
     }
 
     @PostMapping("/register")
     public Object registerAccount(@RequestBody @Valid RegisterForm registerForm){
         String result = userService.register(registerForm);
-        return ResultVOUtil.success(result);
+        return resultVOUtil.success(result);
     }
 }

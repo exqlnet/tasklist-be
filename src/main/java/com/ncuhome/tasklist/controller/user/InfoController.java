@@ -22,11 +22,14 @@ public class InfoController extends BaseController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ResultVOUtil resultVOUtil;
+
     @PostMapping("/changePassword")
     @LoginRequired
     public ResultVO changePassword(@RequestBody @Valid ChangePasswordForm changePasswordForm){
         userService.changePassword(getUser(), changePasswordForm);
-        return ResultVOUtil.success("修改成功");
+        return resultVOUtil.success("修改成功");
     }
 
 
@@ -34,6 +37,6 @@ public class InfoController extends BaseController {
     @LoginRequired
     public ResultVO getInfo(){
         UserVO userVO = new UserVO(getUser());
-        return ResultVOUtil.success(userVO);
+        return resultVOUtil.success(userVO);
     }
 }

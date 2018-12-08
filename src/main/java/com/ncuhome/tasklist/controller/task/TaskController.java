@@ -29,26 +29,29 @@ public class TaskController extends BaseController {
     @Autowired
     private TaskService taskService;
 
+    @Autowired
+    ResultVOUtil resultVOUtil;
+
 
     @LoginRequired
     @PostMapping("/createTask")
     public Object createTask(@RequestBody @Valid CreateTaskForm createTaskForm){
         taskService.createTask(createTaskForm);
-        return ResultVOUtil.success("ok");
+        return resultVOUtil.success("创建成功");
     }
 
     @LoginRequired
     @DeleteMapping("/deleteTask")
     public Object deleteTask(@RequestBody @Valid Integer taskId){
         taskService.deleteTask(taskId);
-        return ResultVOUtil.success("ok");
+        return resultVOUtil.success("ok");
     }
 
     @LoginRequired
     @PutMapping("/modifyTask")
     public Object modifyTask(@RequestBody @Valid ModifyTaskForm modifyTaskForm){
         taskService.modifyTask(modifyTaskForm);
-        return ResultVOUtil.success("ok");
+        return resultVOUtil.success("ok");
     }
 
     @LoginRequired
@@ -59,6 +62,6 @@ public class TaskController extends BaseController {
         for(Task t :  list){
             log.info("{}", t.getTaskId());
         }
-        return ResultVOUtil.success(getUser().getTasks());
+        return resultVOUtil.success(getUser().getTasks());
     }
 }
