@@ -51,6 +51,7 @@ public class Task {
     // relationship
     @ManyToOne
     @JoinColumn(name="userId", referencedColumnName = "userId")
+    @JsonIgnore
     private User user;
 
     // type:
