@@ -27,9 +27,9 @@
 ```
 
 
-###删除任务
-###URL: /api/task/delete
-###METHOD: delete
+### 删除任务
+### URL: /api/task/delete
+### METHOD: delete
 
 * 参数
 ```json
@@ -47,9 +47,9 @@
 }
 ```
 
-###修改任务
-###URL: /api/task/modify
-###METHOD: put
+### 修改任务
+### URL: /api/task/modify
+### METHOD: put
 
 * 参数
 ```json
@@ -75,10 +75,12 @@
 }
 ```
 
-###获取任务列表
-###URL: /api/task/list
-###METHOD: get
+### 获取任务列表
+### URL: /api/task/list
+### METHOD: get
+
 * 成功返回
+
 ```json
 {
   "code": 1,
