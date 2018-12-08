@@ -25,4 +25,6 @@ public class CreateTaskForm {
 
     private Integer monthday;
 
+    private String label;
+
 }

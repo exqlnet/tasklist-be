@@ -46,6 +46,8 @@ public class Task {
 
     private Integer type;// 任务类型（周期）
 
+    private String label; // 标签：紧急、一般
+
     // relationship
     @ManyToOne
     @JoinColumn(name="userId", referencedColumnName = "userId")
@@ -59,9 +61,24 @@ public class Task {
     // 1. 找出所有type=once的指定日期内的任务和所有type!=once的所有任务
     // 2. 遍历任务，把任务到每一天，返回一个字典数据
 
+    private Boolean checkLabel(String label){
+        String accessLabels[] = {"紧急", "一般"};
+        for(String accessLabel :accessLabels){
+            if(accessLabel.equals(label)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Task(CreateTaskForm createTaskForm){
         title = createTaskForm.getTitle();
         description = createTaskForm.getDescription();
+        label = createTaskForm.getLabel();
+        if(!checkLabel(label)){
+            throw new TaskException("Invalid label");
+        }
+
 
         if (createTaskForm.getType().equals(TaskTypeEnum.ONCE.getCode())){
             type = TaskTypeEnum.ONCE.getCode();
