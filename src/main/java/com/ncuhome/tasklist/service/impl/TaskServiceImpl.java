@@ -2,6 +2,7 @@ package com.ncuhome.tasklist.service.impl;
 
 import com.ncuhome.tasklist.dataobject.Task;
 import com.ncuhome.tasklist.dataobject.User;
+import com.ncuhome.tasklist.exception.TaskException;
 import com.ncuhome.tasklist.form.TaskForm.CreateTaskForm;
 import com.ncuhome.tasklist.form.TaskForm.ModifyTaskForm;
 import com.ncuhome.tasklist.repository.TaskRepository;
@@ -43,5 +44,19 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public String modifyTask(ModifyTaskForm modifyTaskForm) {
         return null;
+    }
+
+    @Override
+    public Boolean finish(Integer taskId) {
+        Task task = taskRepository.findByTaskId(taskId);
+        if(task == null){
+            throw new TaskException("任务不存在");
+        }
+
+        if(task.getUser().getUserId().equals((User)request.getAttribute("user")))
+
+        task.setIsFinish(1);
+        taskRepository.save(task);
+        return true;
     }
 }

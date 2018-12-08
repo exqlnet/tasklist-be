@@ -65,4 +65,12 @@ public class TaskController extends BaseController {
         }
         return resultVOUtil.success(getUser().getTasks());
     }
+
+    @LoginRequired
+    @PostMapping("/finish")
+    public Object finish(@RequestBody @Valid DeleteTaskForm deleteTaskForm){
+        Integer taskId = deleteTaskForm.getTaskId();
+        taskService.finish(taskId);
+        return resultVOUtil.success("任务已完成");
+    }
 }
