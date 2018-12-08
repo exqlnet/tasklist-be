@@ -13,12 +13,10 @@ public class ModifyTaskForm{
     @Valid
     private Integer taskId;
 
-    @Valid
     private String title;
 
     private String description = "";
 
-    @Valid
     private TaskTypeEnum type;
 
     private Date startTime;
@@ -28,5 +26,7 @@ public class ModifyTaskForm{
     private Integer weekday;
 
     private Integer monthday;
+
+    private String label;
 
 }

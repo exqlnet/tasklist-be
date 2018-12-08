@@ -1,7 +1,8 @@
 # 任务接口
 
 ### 创建任务
-
+### URL: /api/task/create
+### METHOD: post
 * 参数
 ```json
 {
@@ -24,3 +25,80 @@
   "data": "创建成功"
 }
 ```
+
+
+###删除任务
+###URL: /api/task/delete
+###METHOD: delete
+
+* 参数
+```json
+{
+  "taskId": "任务Id"
+}
+```
+
+* 成功返回
+```json
+{
+  "code": 1,
+  "msg": "成功",
+  "data": "删除成功"
+}
+```
+
+###修改任务
+###URL: /api/task/modify
+###METHOD: put
+
+* 参数
+```json
+{
+  "taskId": "任务Id",
+  "title": "任务标题（必填）",
+  "type": "Integer，循环类型（必填）, 1仅一次，2每天任务，3每周任务，4每月任务",
+  "description": "描述信息",
+  "startTime": "开始时间",
+  "endTime": "结束时间",
+  "weekday": "星期几循环",
+  "monthday": "每个月几号循环",
+  "label": "标签"
+}
+```
+
+* 成功返回
+```json
+{
+  "code": 1,
+  "msg": "成功",
+  "data": "保存成功"
+}
+```
+
+###获取任务列表
+###URL: /api/task/list
+###METHOD: get
+* 成功返回
+```json
+{
+  "code": 1,
+  "msg": "成功",
+  "data": [
+    {
+      "taskId": "任务Id",
+      "title": "任务标题",
+      "description": "任务描述",
+      "isfinish": "是否完成，1完成，0未完成",
+      "finishTime": "完成时间",
+      "startTime": "开始时间",
+      "endTime": "结束时间",
+      "createTime": "创建时间",
+      "updateTime": "更新时间",
+      "weekday": "星期几循环",
+      "monthday": "每个月几号循环",
+      "label": "标签"
+    }
+  ]
+}
+```
+

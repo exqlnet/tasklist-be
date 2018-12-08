@@ -7,6 +7,7 @@ import com.ncuhome.tasklist.VO.ResultVO;
 import com.ncuhome.tasklist.annotations.LoginRequired;
 import com.ncuhome.tasklist.dataobject.Task;
 import com.ncuhome.tasklist.form.TaskForm.CreateTaskForm;
+import com.ncuhome.tasklist.form.TaskForm.DeleteTaskForm;
 import com.ncuhome.tasklist.form.TaskForm.ModifyTaskForm;
 import com.ncuhome.tasklist.service.TaskService;
 import com.ncuhome.tasklist.util.BaseController;
@@ -34,24 +35,24 @@ public class TaskController extends BaseController {
 
 
     @LoginRequired
-    @PostMapping("/createTask")
+    @PostMapping("/create")
     public Object createTask(@RequestBody @Valid CreateTaskForm createTaskForm){
         taskService.createTask(createTaskForm);
         return resultVOUtil.success("创建成功");
     }
 
     @LoginRequired
-    @DeleteMapping("/deleteTask")
-    public Object deleteTask(@RequestBody @Valid Integer taskId){
-        taskService.deleteTask(taskId);
-        return resultVOUtil.success("ok");
+    @DeleteMapping("/delete")
+    public Object deleteTask(@RequestBody @Valid DeleteTaskForm deleteTaskForm){
+        taskService.deleteTask(deleteTaskForm.getTaskId());
+        return resultVOUtil.success("删除成功");
     }
 
     @LoginRequired
-    @PutMapping("/modifyTask")
+    @PutMapping("/modify")
     public Object modifyTask(@RequestBody @Valid ModifyTaskForm modifyTaskForm){
         taskService.modifyTask(modifyTaskForm);
-        return resultVOUtil.success("ok");
+        return resultVOUtil.success("保存成功");
     }
 
     @LoginRequired
