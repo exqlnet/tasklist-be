@@ -14,9 +14,10 @@ public class CreateTaskForm {
 
     private String description = "";
 
-    @Valid
+//    @Valid
     private Integer type;
 
+    @Valid
     private Date startTime;
 
     private Date endTime;
@@ -26,5 +27,7 @@ public class CreateTaskForm {
     private Integer monthday;
 
     private String label; // 工作 学习 生活 购物 娱乐 或自定义
+
+    private Integer priority;
 
 }

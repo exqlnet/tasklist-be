@@ -25,7 +25,7 @@ public class Task {
     @Lob
     private String description;
 
-    private Integer isFinish; // 1完成 0未完成
+    private Integer isFinish = 0; // 1完成 0未完成
 
     private Date finishTime; // 完成时间
 
@@ -47,6 +47,8 @@ public class Task {
     private Integer type;// 任务类型（周期）
 
     private String label; // 标签：紧急、一般
+
+    private Integer priority; // 优先级;
 
     // relationship
     @ManyToOne
@@ -76,42 +78,48 @@ public class Task {
         title = createTaskForm.getTitle();
         description = createTaskForm.getDescription();
         label = createTaskForm.getLabel();
-        if(!checkLabel(label)){
-            throw new TaskException("Invalid label");
-        }
+        priority = createTaskForm.getPriority();
+        startTime = createTaskForm.getStartTime();
+        isFinish = 0;
 
 
-        if (createTaskForm.getType().equals(TaskTypeEnum.ONCE.getCode())){
-            type = TaskTypeEnum.ONCE.getCode();
-            startTime = createTaskForm.getStartTime();
-            endTime = createTaskForm.getEndTime();
-        }
-        else if (createTaskForm.getType().equals(TaskTypeEnum.DAY.getCode())){
-            // 不允许跨越两天
-//            if(createTaskForm.getStartTime().)
-            type = TaskTypeEnum.DAY.getCode();
-            startTime = createTaskForm.getStartTime();
-            endTime = createTaskForm.getEndTime();
-        }
-        else if (createTaskForm.getType().equals(TaskTypeEnum.WEEK.getCode())){
-            type = TaskTypeEnum.WEEK.getCode();
-            startTime = createTaskForm.getStartTime();
-            endTime = createTaskForm.getEndTime();
-            weekday = createTaskForm.getWeekday();
-            if (weekday <= 0 || weekday > 7){
-                throw new TaskException("weekday有误");
-            }
-        }
-        else if (createTaskForm.getType().equals(TaskTypeEnum.MONTH.getCode())){
-            type = TaskTypeEnum.WEEK.getCode();
-            startTime = createTaskForm.getStartTime();
-            endTime = createTaskForm.getEndTime();
-            monthday = createTaskForm.getMonthday();
-            if(monthday<=0 || monthday >=32){
-                throw new TaskException("monthday有误");
-            }
-        }
-        else throw new TaskException("error type");
+
+////        if(!checkLabel(label)){
+////            throw new TaskException("Invalid label");
+////        }
+//
+//
+//        if (createTaskForm.getType().equals(TaskTypeEnum.ONCE.getCode())){
+//            type = TaskTypeEnum.ONCE.getCode();
+//            startTime = createTaskForm.getStartTime();
+//            endTime = createTaskForm.getEndTime();
+//        }
+//        else if (createTaskForm.getType().equals(TaskTypeEnum.DAY.getCode())){
+//            // 不允许跨越两天
+////            if(createTaskForm.getStartTime().)
+//            type = TaskTypeEnum.DAY.getCode();
+//            startTime = createTaskForm.getStartTime();
+//            endTime = createTaskForm.getEndTime();
+//        }
+//        else if (createTaskForm.getType().equals(TaskTypeEnum.WEEK.getCode())){
+//            type = TaskTypeEnum.WEEK.getCode();
+//            startTime = createTaskForm.getStartTime();
+//            endTime = createTaskForm.getEndTime();
+//            weekday = createTaskForm.getWeekday();
+//            if (weekday <= 0 || weekday > 7){
+//                throw new TaskException("weekday有误");
+//            }
+//        }
+//        else if (createTaskForm.getType().equals(TaskTypeEnum.MONTH.getCode())){
+//            type = TaskTypeEnum.WEEK.getCode();
+//            startTime = createTaskForm.getStartTime();
+//            endTime = createTaskForm.getEndTime();
+//            monthday = createTaskForm.getMonthday();
+//            if(monthday<=0 || monthday >=32){
+//                throw new TaskException("monthday有误");
+//            }
+//        }
+//        else throw new TaskException("error type");
     }
     public Task(){}
 

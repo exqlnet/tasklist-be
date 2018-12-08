@@ -52,8 +52,10 @@ public class TaskServiceImpl implements TaskService {
         if(task == null){
             throw new TaskException("任务不存在");
         }
-
-        if(task.getUser().getUserId().equals((User)request.getAttribute("user")))
+        User user = (User)request.getAttribute("user");
+        if(!task.getUser().getUserId().equals(user.getUserId())){
+            throw new TaskException("无法修改该任务");
+        }
 
         task.setIsFinish(1);
         taskRepository.save(task);
