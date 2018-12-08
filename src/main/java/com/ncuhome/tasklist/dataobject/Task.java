@@ -95,6 +95,7 @@ public class Task {
         }
         else throw new TaskException("error type");
     }
+    public Task(){}
 
     public Boolean modify(ModifyTaskForm modifyTaskForm){
         return true;

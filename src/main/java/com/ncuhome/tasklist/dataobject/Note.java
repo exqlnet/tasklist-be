@@ -18,4 +18,6 @@ public class Note {
 
     private Integer userId;
 
+    public Note(){}
+
 }
