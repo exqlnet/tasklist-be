@@ -1,7 +1,9 @@
 package com.ncuhome.tasklist.util;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.ncuhome.tasklist.annotations.LoginRequired;
 import com.ncuhome.tasklist.dataobject.User;
@@ -17,7 +19,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 
 
@@ -43,6 +48,9 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         LoginRequired methodAnnotation = method.getAnnotation(LoginRequired.class);
         if(methodAnnotation==null)return true;
         User user = userService.verifyToken(request.getHeader("Authorization"));
+
+        if (user == null){unauth(response);return false;}
+
         request.setAttribute("user", user);
         return true;
     }
@@ -53,5 +61,15 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             return s.hasNext() ? s.next() : "";
         }
         return "";
+    }
+
+    private static void unauth(HttpServletResponse response) throws IOException{
+        response.setStatus(401);
+        response.setHeader("Content-Type", "application/json");
+        response.setCharacterEncoding("UTF-8");
+        Map<String, Object> body = new HashMap<>();
+        body.put("code", 401);
+        body.put("msg", "Unauthorized token");
+        response.getWriter().write(JsonUtil.gson.toJson(body));
     }
 }

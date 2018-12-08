@@ -109,11 +109,11 @@ public class UserServiceImpl implements UserService {
             String email = claims.get("email", String.class);
             User user = userRepository.findByEmail(email);
             if (user == null){
-                throw new UserLoginException(LoginEnum.USER_NOT_FOUND);
+                return null;
             }
             return user;
         }catch(Exception e){
-            throw new UserLoginException(LoginEnum.USER_NOT_AUTH);
+            return null;
         }
     }
 }
