@@ -45,7 +45,8 @@ public class TaskServiceImpl implements TaskService {
         task.setTitle(createTaskForm.getTitle());
         task.setLabel(createTaskForm.getLabel());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-        task.setStartTime(simpleDateFormat.parse(createTaskForm.getStartDate().substring(11) + " " + createTaskForm.getStartTime()));
+        String wtfString = createTaskForm.getStartDate().replaceAll("T.+"," " + createTaskForm.getStartTime());
+        task.setStartTime(simpleDateFormat.parse(wtfString));
         task.setType(TaskTypeEnum.StringToInteger(createTaskForm.getType()));
         task.setDescription(createTaskForm.getDescription());
         task.setIsFinish(0);
