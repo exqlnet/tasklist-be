@@ -10,6 +10,7 @@ import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+
 @Configuration
 public class Configurations implements WebMvcConfigurer {
 
@@ -38,4 +39,17 @@ public class Configurations implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(getAuthInterceptor());
     }
+
+
+//    @Bean
+//    public UserProvider userProvider(HttpServletRequest httpServletRequest){
+//
+//        return new UserProvider() {
+//            @Override
+//            public User getUser() {
+//                return new User();
+//            }
+//        };
+//
+//    }
 }

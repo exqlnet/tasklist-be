@@ -19,4 +19,13 @@ public enum TaskTypeEnum {
         this.code = code;
         this.desc = desc;
     }
+
+    public static Integer StringToInteger(String typeString){
+        for(TaskTypeEnum taskTypeEnum: values()){
+            if(taskTypeEnum.getDesc().equals(typeString)){
+                return taskTypeEnum.getCode();
+            }
+        }
+        return -1;
+    }
 }

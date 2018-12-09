@@ -85,53 +85,23 @@ public class Task {
         return false;
     }
 
-    public Task(CreateTaskForm createTaskForm){
-        title = createTaskForm.getTitle();
-        description = createTaskForm.getDescription();
-        label = createTaskForm.getLabel();
-        priority = createTaskForm.getPriority();
-        startTime = createTaskForm.getStartTime();
-        isFinish = 0;
-
-
-
-////        if(!checkLabel(label)){
-////            throw new TaskException("Invalid label");
-////        }
-//
-//
-//        if (createTaskForm.getType().equals(TaskTypeEnum.ONCE.getCode())){
-//            type = TaskTypeEnum.ONCE.getCode();
-//            startTime = createTaskForm.getStartTime();
-//            endTime = createTaskForm.getEndTime();
-//        }
-//        else if (createTaskForm.getType().equals(TaskTypeEnum.DAY.getCode())){
-//            // 不允许跨越两天
-////            if(createTaskForm.getStartTime().)
-//            type = TaskTypeEnum.DAY.getCode();
-//            startTime = createTaskForm.getStartTime();
-//            endTime = createTaskForm.getEndTime();
-//        }
-//        else if (createTaskForm.getType().equals(TaskTypeEnum.WEEK.getCode())){
-//            type = TaskTypeEnum.WEEK.getCode();
-//            startTime = createTaskForm.getStartTime();
-//            endTime = createTaskForm.getEndTime();
-//            weekday = createTaskForm.getWeekday();
-//            if (weekday <= 0 || weekday > 7){
-//                throw new TaskException("weekday有误");
-//            }
-//        }
-//        else if (createTaskForm.getType().equals(TaskTypeEnum.MONTH.getCode())){
-//            type = TaskTypeEnum.WEEK.getCode();
-//            startTime = createTaskForm.getStartTime();
-//            endTime = createTaskForm.getEndTime();
-//            monthday = createTaskForm.getMonthday();
-//            if(monthday<=0 || monthday >=32){
-//                throw new TaskException("monthday有误");
-//            }
-//        }
-//        else throw new TaskException("error type");
+    public Task(String title, String description, Integer isFinish, Date finishTime, String label, Integer priority, Date startTime, Date endTime, Date createTime, Date updateTime, Integer weekday, Integer monthday, Integer type, User user) {
+        this.title = title;
+        this.description = description;
+        this.isFinish = isFinish;
+        this.finishTime = finishTime;
+        this.label = label;
+        this.priority = priority;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+        this.weekday = weekday;
+        this.monthday = monthday;
+        this.type = type;
+        this.user = user;
     }
+
     public Task(){}
 
     public Boolean modify(ModifyTaskForm modifyTaskForm){

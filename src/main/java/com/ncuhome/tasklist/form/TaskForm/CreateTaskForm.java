@@ -15,10 +15,13 @@ public class CreateTaskForm {
     private String description = "";
 
 //    @Valid
-    private Integer type;
+    private String type;
 
     @Valid
-    private Date startTime;
+    private String startDate; // yyyy-MM-ddT16:00:00
+
+    @Valid
+    private String startTime; // 12:00
 
     private Date endTime;
 
@@ -29,5 +32,4 @@ public class CreateTaskForm {
     private String label; // 工作 学习 生活 购物 娱乐 或自定义
 
     private Integer priority;
-
 }
