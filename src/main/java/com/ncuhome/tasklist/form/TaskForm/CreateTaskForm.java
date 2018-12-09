@@ -14,7 +14,6 @@ public class CreateTaskForm {
 
     private String description = "";
 
-//    @Valid
     private String type;
 
     @Valid
