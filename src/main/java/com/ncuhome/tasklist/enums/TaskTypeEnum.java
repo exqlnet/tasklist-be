@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 
 @Getter
 public enum TaskTypeEnum {
-    ONCE(1, "一次性任务"),
-    DAY(2, "每天任务"),
-    WEEK(3, "每周任务"),
-    MONTH(4, "每月任务");
+    ONCE(1, "无循环"),
+    DAY(2, "每天"),
+    WEEK(3, "每周"),
+    MONTH(4, "每月");
 
     private Integer code;
 

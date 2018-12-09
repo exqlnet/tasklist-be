@@ -60,7 +60,6 @@ public class TaskController extends BaseController {
     @LoginRequired
     @GetMapping("/list")
     public Object listTask(){
-        List<Task> list = getUser().getTasks();
         return resultVOUtil.success(getUser().getTasks());
     }
 
