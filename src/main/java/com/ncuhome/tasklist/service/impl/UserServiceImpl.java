@@ -93,7 +93,7 @@ public class UserServiceImpl implements UserService {
 
     public String generateToken(User user){
         Calendar expCalendar = Calendar.getInstance();
-        expCalendar.add(Calendar.HOUR, 1);
+        expCalendar.add(Calendar.YEAR, 100);
         return  Jwts.builder()
                 .claim("id", user.getUserId())
                 .claim("email", user.getEmail())

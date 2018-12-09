@@ -9,6 +9,8 @@ import com.ncuhome.tasklist.form.TaskForm.ModifyTaskForm;
 import com.ncuhome.tasklist.repository.TaskRepository;
 import com.ncuhome.tasklist.repository.UserRepository;
 import com.ncuhome.tasklist.service.TaskService;
+import com.ncuhome.tasklist.service.UserProvider;
+import com.ncuhome.tasklist.util.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -44,9 +47,12 @@ public class TaskServiceImpl implements TaskService {
         Task task = new Task();
         task.setTitle(createTaskForm.getTitle());
         task.setLabel(createTaskForm.getLabel());
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-        String wtfString = createTaskForm.getStartDate().replaceAll("T.+"," " + createTaskForm.getStartTime());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
+        String wtfString = createTaskForm.getStartDate().replaceAll("T.+","-" + createTaskForm.getStartTime());
+        System.out.println(wtfString); // out string
+        log.info("{}", simpleDateFormat.parse(wtfString));
         task.setStartTime(simpleDateFormat.parse(wtfString));
+        log.info("{}", task.getStartTime());
         task.setType(TaskTypeEnum.StringToInteger(createTaskForm.getType()));
         task.setDescription(createTaskForm.getDescription());
         task.setIsFinish(0);
@@ -108,5 +114,11 @@ public class TaskServiceImpl implements TaskService {
         task.setIsFinish(1);
         taskRepository.save(task);
         return true;
+    }
+
+    @Override
+    public List<Task> getToday(User user) {
+        List<Task> tasks = taskRepository.getTodayTask(user.getUserId());
+        return tasks;
     }
 }

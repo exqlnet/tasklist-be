@@ -70,4 +70,10 @@ public class TaskController extends BaseController {
         taskService.finish(taskId);
         return resultVOUtil.success("任务已完成");
     }
+
+    @LoginRequired
+    @GetMapping("/today")
+    public Object getTodayTask(){
+        return resultVOUtil.success(taskService.getToday(getUser()));
+    }
 }

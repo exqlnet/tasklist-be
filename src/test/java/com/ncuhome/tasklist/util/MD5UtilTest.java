@@ -32,11 +32,10 @@ public class MD5UtilTest {
 
     @Test
     public void timeFormat() throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String dateString = "2017-10-10T12:00:00";
-        String timeString = "16:00";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
+        String dateString = "2018-12-09-12:00";
 
-//        log.info("{}", simpleDateFormat.parse("2017-11-11T16:00:00" ));
+        log.info("{}", simpleDateFormat.parse(dateString));
 
     }
 }
