@@ -9,7 +9,6 @@ import com.ncuhome.tasklist.form.TaskForm.ModifyTaskForm;
 import com.ncuhome.tasklist.repository.TaskRepository;
 import com.ncuhome.tasklist.repository.UserRepository;
 import com.ncuhome.tasklist.service.TaskService;
-import com.ncuhome.tasklist.service.UserProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
