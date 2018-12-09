@@ -8,8 +8,8 @@
 {
   "title": "*任务标题",
   "description": "描述信息",
-  "startDate": "*开始日期",
-  "startTime": "*开始时间",
+  "startDate": "*开始日期 例如：2018-12-09T16:00:000Z",
+  "startTime": "*开始时间 例如：12:00",
   "label": "标签",
   "priority": "优先级"
 }
