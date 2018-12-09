@@ -2,25 +2,39 @@ package com.ncuhome.tasklist.service.impl;
 
 import com.ncuhome.tasklist.dataobject.Task;
 import com.ncuhome.tasklist.dataobject.User;
+import com.ncuhome.tasklist.enums.TaskTypeEnum;
 import com.ncuhome.tasklist.exception.TaskException;
 import com.ncuhome.tasklist.form.TaskForm.CreateTaskForm;
 import com.ncuhome.tasklist.form.TaskForm.ModifyTaskForm;
 import com.ncuhome.tasklist.repository.TaskRepository;
 import com.ncuhome.tasklist.repository.UserRepository;
 import com.ncuhome.tasklist.service.TaskService;
+import com.ncuhome.tasklist.service.UserProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @Slf4j
 public class TaskServiceImpl implements TaskService {
 
+    private final static Map MAP = new HashMap<String, Integer>();
+
     @Autowired
     private UserRepository userRepository;
+
+
+    @Autowired
+    private UserProvider userProvider;
 
     @Autowired
     private TaskRepository taskRepository;
@@ -29,8 +43,20 @@ public class TaskServiceImpl implements TaskService {
     private HttpServletRequest request;
 
     @Override
-    public String createTask(CreateTaskForm createTaskForm) {
-        Task task = new Task(createTaskForm);
+    public String createTask(CreateTaskForm createTaskForm) throws ParseException{
+
+        Task task = new Task();
+        task.setTitle(createTaskForm.getTitle());
+        task.setLabel(createTaskForm.getLabel());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        task.setStartTime(simpleDateFormat.parse(createTaskForm.getStartDate().substring(11) + " " + createTaskForm.getStartTime()));
+        task.setType(TaskTypeEnum.StringToInteger(createTaskForm.getType()));
+        task.setDescription(createTaskForm.getDescription());
+        task.setIsFinish(0);
+        task.setPriority(createTaskForm.getPriority());
+
+//        task.setStartTime();
+//        task.setStartTime(createTaskForm.getStartTime());
         task.setUser((User)request.getAttribute("user"));
         taskRepository.save(task);
         return "添加成功";

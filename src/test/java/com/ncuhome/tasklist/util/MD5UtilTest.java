@@ -3,6 +3,9 @@ package com.ncuhome.tasklist.util;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +27,16 @@ public class MD5UtilTest {
                 "    \"status\": 0\n" +
                 "}", HashMap.class);
         log.info((String)json.get("msg"));
+
+    }
+
+    @Test
+    public void timeFormat() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String dateString = "2017-10-10T12:00:00";
+        String timeString = "16:00";
+
+//        log.info("{}", simpleDateFormat.parse("2017-11-11T16:00:00" ));
 
     }
 }
