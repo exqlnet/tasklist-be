@@ -63,8 +63,6 @@ public class UserServiceImpl implements UserService {
         else{
             throw new UserLoginException(LoginEnum.PWD_BEFORE_INCORRECT);
         }
-
-
         return "修改成功";
     }
 
@@ -93,7 +91,7 @@ public class UserServiceImpl implements UserService {
 
     public String generateToken(User user){
         Calendar expCalendar = Calendar.getInstance();
-        expCalendar.add(Calendar.YEAR, 1);
+        expCalendar.add(Calendar.HOUR, 3600);
         return  Jwts.builder()
                 .claim("id", user.getUserId())
                 .claim("email", user.getEmail())
