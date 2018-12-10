@@ -1,6 +1,5 @@
 package com.ncuhome.tasklist.form.TaskForm;
 
-import com.ncuhome.tasklist.enums.TaskTypeEnum;
 import lombok.Data;
 
 import javax.validation.Valid;

@@ -2,6 +2,7 @@ package com.ncuhome.tasklist.controller.task;
 
 
 import com.google.gson.JsonObject;
+import com.ncuhome.tasklist.VO.TaskVO;
 import com.ncuhome.tasklist.annotations.LoginRequired;
 import com.ncuhome.tasklist.dataobject.Task;
 import com.ncuhome.tasklist.form.TaskForm.CreateTaskForm;
@@ -18,7 +19,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -60,7 +64,18 @@ public class TaskController extends BaseController {
     @LoginRequired
     @GetMapping("/list")
     public Object listTask(){
-        return resultVOUtil.success(getUser().getTasks());
+        Map<String, List> data = new HashMap<>();
+        data.put("finish", new ArrayList<TaskVO>());
+        data.put("unfinish", new ArrayList<TaskVO>());
+        for(Task task : getUser().getTasks()){
+            if(task.getIsFinish().equals(1)){
+                data.get("finish").add(new TaskVO(task));
+            }
+            else{
+                data.get("unfinish").add(new TaskVO(task));
+            }
+        }
+        return resultVOUtil.success(data);
     }
 
     @LoginRequired
