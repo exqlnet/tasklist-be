@@ -91,7 +91,7 @@ public class TaskController extends BaseController {
     public Object unfinish(@RequestBody @Valid DeleteTaskForm deleteTaskForm){
         Integer taskId = deleteTaskForm.getTaskId();
         taskService.unfinish(taskId);
-        return resultVOUtil.success("取消完成成功");
+        return resultVOUtil.success("取消完成");
     }
 
     @LoginRequired

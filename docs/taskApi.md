@@ -126,3 +126,22 @@
   ]
 }
 ```
+
+### 取消完成任务
+### URL: /api/task/unfinish
+### METHOD: post
+* 参数
+```json
+{
+  "taskId": "任务ID"
+}
+```
+
+* 成功返回
+```json
+{
+  "code": 1,
+  "msg": "成功",
+  "data": "取消完成"
+}
+```
