@@ -18,5 +18,8 @@ public interface TaskService {
 
     public Boolean finish(Integer taskId);
 
+    public Boolean unfinish(Integer taskId);
+
     public List<Task> getToday(User user);
+
 }

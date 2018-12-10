@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,6 +41,9 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     private HttpServletRequest request;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @Override
     public String createTask(CreateTaskForm createTaskForm) throws ParseException{
@@ -75,7 +79,9 @@ public class TaskServiceImpl implements TaskService {
         if(!task.getUser().getUserId().equals(user.getUserId())){
             throw new TaskException("该任务不属于你");
         };
-        taskRepository.delete(task);
+        entityManager.createQuery("delete from task where task_id=:id")
+                .setParameter("id", taskId)
+                .executeUpdate();
         return "删除成功";
     }
 
@@ -112,6 +118,22 @@ public class TaskServiceImpl implements TaskService {
         }
 
         task.setIsFinish(1);
+        taskRepository.save(task);
+        return true;
+    }
+
+    @Override
+    public Boolean unfinish(Integer taskId){
+        Task task = taskRepository.findByTaskId(taskId);
+        if(task == null){
+            throw new TaskException("任务不存在");
+        }
+        User user = (User)request.getAttribute("user");
+        if(!task.getUser().getUserId().equals(user.getUserId())){
+            throw new TaskException("无法修改该任务");
+        }
+
+        task.setIsFinish(0);
         taskRepository.save(task);
         return true;
     }

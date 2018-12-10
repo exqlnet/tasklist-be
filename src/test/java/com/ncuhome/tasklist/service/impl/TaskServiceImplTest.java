@@ -2,6 +2,7 @@ package com.ncuhome.tasklist.service.impl;
 
 import com.ncuhome.tasklist.dataobject.Task;
 import com.ncuhome.tasklist.dataobject.User;
+import com.ncuhome.tasklist.repository.TaskRepository;
 import com.ncuhome.tasklist.repository.UserRepository;
 import com.ncuhome.tasklist.service.TaskService;
 import com.ncuhome.tasklist.service.UserService;
@@ -29,10 +30,17 @@ public class TaskServiceImplTest {
     @Autowired
     TaskService taskService;
 
+    @Autowired
+    TaskRepository taskRepository;
+
     @Test
     public void getToday() {
         User user = userRepository.findByEmail("591210216@qq.com");
         List<Task> tasks =  taskService.getToday(user);
         log.info("{}", tasks);
+    }
+
+    @Test
+    public void deleteTask(){
     }
 }
