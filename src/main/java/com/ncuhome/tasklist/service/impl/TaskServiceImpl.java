@@ -1,5 +1,8 @@
 package com.ncuhome.tasklist.service.impl;
 
+import com.mysql.cj.MysqlxSession;
+import com.mysql.cj.NativeSession;
+import com.mysql.cj.Session;
 import com.ncuhome.tasklist.dataobject.Task;
 import com.ncuhome.tasklist.dataobject.User;
 import com.ncuhome.tasklist.enums.TaskTypeEnum;
@@ -79,9 +82,7 @@ public class TaskServiceImpl implements TaskService {
         if(!task.getUser().getUserId().equals(user.getUserId())){
             throw new TaskException("该任务不属于你");
         };
-        entityManager.createQuery("delete from task where task_id=:id")
-                .setParameter("id", taskId)
-                .executeUpdate();
+
         return "删除成功";
     }
 
