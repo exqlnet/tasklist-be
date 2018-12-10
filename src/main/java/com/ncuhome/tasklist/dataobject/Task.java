@@ -62,7 +62,7 @@ public class Task {
 
 
     // relationship
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="userId", referencedColumnName = "userId")
     @JsonIgnore
     private User user;

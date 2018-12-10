@@ -45,8 +45,8 @@ public class TaskVO {
 
     public TaskVO(Task task) {
         BeanUtils.copyProperties(task, this);
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        this.startDate = simpleDateFormat.format(task.getStartTime()) + "T16:00:000Z";
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd");
+        this.startDate = simpleDateFormat.format(task.getStartTime());
         this.startTime = new SimpleDateFormat("HH:mm").format(task.getStartTime());
     }
 

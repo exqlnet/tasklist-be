@@ -34,7 +34,7 @@ public class User{
         password = MD5Util.md5(pwd);
     }
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @OneToMany(cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
     @JoinColumn(name="userId", referencedColumnName = "userId")
     private List<Task> tasks;
 

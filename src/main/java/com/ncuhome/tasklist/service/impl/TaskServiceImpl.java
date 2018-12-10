@@ -82,7 +82,7 @@ public class TaskServiceImpl implements TaskService {
         if(!task.getUser().getUserId().equals(user.getUserId())){
             throw new TaskException("该任务不属于你");
         };
-
+        taskRepository.delete(task);
         return "删除成功";
     }
 
