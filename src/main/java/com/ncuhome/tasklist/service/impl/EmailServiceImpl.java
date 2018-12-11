@@ -29,11 +29,11 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public Boolean sendVerifyCode(String address) {
-        // 检查用户
-        User user = userRepository.findByEmail(address);
-        if(user != null){
-            throw new UserRegisterException("用户已存在");
-        }
+//        // 检查用户
+//        User user = userRepository.findByEmail(address);
+//        if(user != null){
+//            throw new UserRegisterException("用户已存在");
+//        }
 
         // 检查邮件格式并发送邮件
         // TODO

@@ -114,4 +114,25 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
+
+    // 获取验证码
+    @Override
+    public String getVerifyCode(String email){
+        EmailSend emailSend = emailSendRepository.findByEmail(email);
+        if (emailSend == null){
+            return null;
+        }
+        else{
+            String vcode = emailSend.getVerifyCode();
+            emailSendRepository.delete(emailSend);
+            return vcode;
+        }
+    }
+
+    // 根据用户和新密码修改密码
+    @Override
+    public Boolean changePwd(User user, String newPwd){
+        user.setPassword(md5Util.md5(newPwd));
+        return true;
+    }
 }

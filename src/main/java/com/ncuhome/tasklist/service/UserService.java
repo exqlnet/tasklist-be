@@ -18,4 +18,8 @@ public interface UserService {
 
     String register(RegisterForm registerForm);
 
+    String getVerifyCode(String email);
+
+    Boolean changePwd(User user, String newPwd);
+
 }
