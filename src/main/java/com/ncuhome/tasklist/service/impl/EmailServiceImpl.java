@@ -37,17 +37,17 @@ public class EmailServiceImpl implements EmailService {
 //        if(user != null){
 //            throw new UserRegisterException("用户已存在");
 //        }
+        String vcode = generateVcode();
         // 检查邮件格式并发送邮件
-        MailUtil.sendMail(address, "验证码 - 时现", generateVcode());
+        MailUtil.sendMail(address, "验证码 - 时现", vcode);
         // 将验证码存入数据库
         EmailSend check = emailSendRepository.findByEmail(address);
         if (check != null){
-            check.setVerifyCode("123456");
+            check.setVerifyCode(vcode);
             emailSendRepository.save(check);
         }
         else{
-            String verifyCode = "666666";
-            EmailSend emailSend = new EmailSend(address, verifyCode);
+            EmailSend emailSend = new EmailSend(address, vcode);
             emailSendRepository.save(emailSend);
         }
         return true;
