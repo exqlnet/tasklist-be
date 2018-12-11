@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import static org.junit.Assert.*;
 
@@ -37,5 +38,16 @@ public class MD5UtilTest {
 
         log.info("{}", simpleDateFormat.parse(dateString));
 
+    }
+
+    @Test
+    public void randomTest(){
+        String vcode = "";
+        for(int i = 0; i < 6; i++){
+            String e = String.valueOf((int)Math.floor(Math.random()*10));
+            log.info(e);
+            vcode = vcode + e;
+        }
+        log.info("{}", vcode);
     }
 }

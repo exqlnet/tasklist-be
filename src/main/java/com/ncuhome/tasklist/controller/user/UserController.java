@@ -49,7 +49,7 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/sendVcode")
-    public Object sendVcode(@RequestBody SendVcodeForm sendVcodeForm){
+    public Object sendVcode(@RequestBody SendVcodeForm sendVcodeForm) throws Exception{
         /*
             body:
                 email : String
