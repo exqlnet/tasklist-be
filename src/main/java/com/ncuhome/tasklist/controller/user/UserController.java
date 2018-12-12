@@ -14,6 +14,7 @@ import com.ncuhome.tasklist.service.EmailService;
 import com.ncuhome.tasklist.service.UserService;
 import com.ncuhome.tasklist.util.BaseController;
 import com.ncuhome.tasklist.util.JsonUtil;
+import com.ncuhome.tasklist.util.MailUtil;
 import com.ncuhome.tasklist.util.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,10 @@ public class UserController extends BaseController {
 
 //        JsonNode body = getBody();
 //        String email = body.get("email").asText();
+        // 检查邮件格式
+        if(!MailUtil.checkEmail(sendVcodeForm.getEmail())){
+            return resultVOUtil.error("邮件格式不正确！");
+        }
         String email = sendVcodeForm.getEmail();
         emailService.sendVerifyCode(email);
         return resultVOUtil.success("发送成功！");

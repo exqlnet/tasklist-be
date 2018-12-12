@@ -8,6 +8,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 
 public class MailUtil {
@@ -57,4 +58,10 @@ public class MailUtil {
         messageHelper.setText(html, true);
         mailSender.send(mimeMessage);
     }
+
+
+    public static boolean checkEmail(String email){
+        return Pattern.matches("(.+?)@(.+?)\\.(.+)", email);
+    }
+
 }
