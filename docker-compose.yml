@@ -15,6 +15,6 @@ services:
       context: .
       dockerfile: Dockerfile-static
     volumes:
-      - "front:/front"
+      - front:/front
     ports:
       - "6788:6788"
