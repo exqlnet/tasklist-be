@@ -1,5 +1,10 @@
 FROM openjdk:8-jdk
 
-COPY ./target/tasklist-0.0.1-SNAPSHOT.jar /usr/local
+ENV TZ=Asia/Shanghai
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ENTRYPOINT ["java", "-jar", "/usr/local/tasklist-0.0.1-SNAPSHOT.jar"]
+RUN apt-get update && apt-get install maven
+RUN mvn package build
+
+
+ENTRYPOINT ["java", "-jar", "./target/tasklist-0.0.1-SNAPSHOT.jar"]
