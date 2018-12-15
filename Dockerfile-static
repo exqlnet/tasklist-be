@@ -1,0 +1,7 @@
+FROM node:7.3.0
+
+WORKDIR /static
+
+RUN npm install --registry=https://registry.npm.taobao.org
+
+ENTRYPOINT["npm", "run", "dev"]
