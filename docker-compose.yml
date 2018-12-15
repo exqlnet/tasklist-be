@@ -9,12 +9,12 @@ services:
       - .:/tasklist
     ports:
       - "6789:6789"
-  static:
+  front:
     restart: always
     build:
       context: .
       dockerfile: Dockerfile-static
     volumes:
-      - "static:/static"
+      - "front:/front"
     ports:
       - "6788:6788"
