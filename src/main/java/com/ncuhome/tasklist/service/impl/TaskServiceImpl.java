@@ -22,9 +22,7 @@ import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -54,12 +52,16 @@ public class TaskServiceImpl implements TaskService {
         Task task = new Task();
         task.setTitle(createTaskForm.getTitle());
         task.setLabel(createTaskForm.getLabel());
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm");
         String wtfString = createTaskForm.getStartDate().replaceAll("T.+","-" + createTaskForm.getStartTime());
-        System.out.println(wtfString); // out string
-        log.info("{}", simpleDateFormat.parse(wtfString));
-        task.setStartTime(simpleDateFormat.parse(wtfString));
-        log.info("{}", task.getStartTime());
+        Date startTime = simpleDateFormat.parse(wtfString);
+        Calendar c = Calendar.getInstance();
+        c.setTime(startTime);
+        c.add(Calendar.DAY_OF_MONTH, 1);
+        startTime = c.getTime();
+        task.setStartTime(startTime);
+
         task.setType(TaskTypeEnum.StringToInteger(createTaskForm.getType()));
         task.setDescription(createTaskForm.getDescription());
         task.setIsFinish(0);
