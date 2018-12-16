@@ -1,8 +1,5 @@
 package com.ncuhome.tasklist.service.impl;
 
-import com.mysql.cj.MysqlxSession;
-import com.mysql.cj.NativeSession;
-import com.mysql.cj.Session;
 import com.ncuhome.tasklist.dataobject.Task;
 import com.ncuhome.tasklist.dataobject.User;
 import com.ncuhome.tasklist.enums.TaskTypeEnum;
@@ -12,13 +9,10 @@ import com.ncuhome.tasklist.form.TaskForm.ModifyTaskForm;
 import com.ncuhome.tasklist.repository.TaskRepository;
 import com.ncuhome.tasklist.repository.UserRepository;
 import com.ncuhome.tasklist.service.TaskService;
-import com.ncuhome.tasklist.service.UserProvider;
-import com.ncuhome.tasklist.util.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,9 +36,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Autowired
     private HttpServletRequest request;
-
-    @Autowired
-    private EntityManager entityManager;
 
     @Override
     public String createTask(CreateTaskForm createTaskForm) throws ParseException{
