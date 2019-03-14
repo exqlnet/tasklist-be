@@ -2,12 +2,8 @@ package com.ncuhome.tasklist.dataobject;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.ncuhome.tasklist.enums.TaskTypeEnum;
-import com.ncuhome.tasklist.exception.TaskException;
-import com.ncuhome.tasklist.form.TaskForm.CreateTaskForm;
 import com.ncuhome.tasklist.form.TaskForm.ModifyTaskForm;
 import lombok.Data;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnJava;
 
 import javax.persistence.*;
 import java.util.Date;

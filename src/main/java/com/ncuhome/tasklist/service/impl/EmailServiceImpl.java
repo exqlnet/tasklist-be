@@ -1,9 +1,6 @@
 package com.ncuhome.tasklist.service.impl;
 
 import com.ncuhome.tasklist.dataobject.EmailSend;
-import com.ncuhome.tasklist.dataobject.User;
-import com.ncuhome.tasklist.exception.UserRegisterException;
-import com.ncuhome.tasklist.form.UserForm.RegisterForm;
 import com.ncuhome.tasklist.repository.EmailSendRepository;
 import com.ncuhome.tasklist.repository.UserRepository;
 import com.ncuhome.tasklist.service.EmailService;
@@ -12,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
-import javax.validation.constraints.Email;
 import java.io.UnsupportedEncodingException;
-import java.util.Random;
 
 @Service
 public class EmailServiceImpl implements EmailService {

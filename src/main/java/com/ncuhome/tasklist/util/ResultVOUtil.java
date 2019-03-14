@@ -12,31 +12,24 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class ResultVOUtil {
 
-    @Resource
-    private HttpServletResponse response;
+    public ResultVO success(String message){
+        return new ResultVO<>(1, message,null);
+    }
+    public ResultVO success(String message, Object ob){
+        return new ResultVO<>(1, message, ob);
+    }
+    public ResultVO success(Object ob){
+        return new ResultVO<>(1, "获取成功", ob);
 
-    public ResultVO success(Object object){
-        ResultVO<Object> resultVO = new ResultVO<>();
-        resultVO.setCode(1);
-        resultVO.setMsg("成功");
-        resultVO.setData(object);
-        return resultVO;
+    }
+    public ResultVO error(String message, Object object){
+        return new ResultVO<>(0, message, object);
+    }
+    public ResultVO error(String message){
+        return new ResultVO<>(0, message, null);
     }
 
-    public ResultVO error(Object object){
-        ResultVO<Object> resultVO = new ResultVO<>();
-        resultVO.setCode(0);
-        resultVO.setMsg("失败");
-        resultVO.setData(object);
-        return resultVO;
-    }
-
-    public ResultVO error(Object object, Integer status){
-        ResultVO<Object> resultVO = new ResultVO<>();
-        resultVO.setCode(0);
-        resultVO.setMsg("失败");
-        resultVO.setData(object);
-        response.setStatus(status);
-        return resultVO;
+    public ResultVO error(){
+        return new ResultVO<>(0, "获取失败", null);
     }
 }

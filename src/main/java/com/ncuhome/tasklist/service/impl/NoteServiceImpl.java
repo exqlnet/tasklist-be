@@ -1,9 +1,7 @@
 package com.ncuhome.tasklist.service.impl;
 
-import com.ncuhome.tasklist.VO.NoteVO;
 import com.ncuhome.tasklist.dataobject.Note;
 import com.ncuhome.tasklist.dataobject.User;
-import com.ncuhome.tasklist.exception.TaskException;
 import com.ncuhome.tasklist.form.NoteForm.CreateNoteForm;
 import com.ncuhome.tasklist.form.NoteForm.ModifyNoteForm;
 import com.ncuhome.tasklist.repository.NoteRepository;
@@ -13,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Service
