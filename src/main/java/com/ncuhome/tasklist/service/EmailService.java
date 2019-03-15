@@ -10,5 +10,5 @@ public interface EmailService {
 
     public Boolean sendEmail(String address, String content);
 
-    public Boolean sendVerifyCode(String address)throws MessagingException, UnsupportedEncodingException;
+    public void sendVerifyCode(String address)throws MessagingException, UnsupportedEncodingException;
 }

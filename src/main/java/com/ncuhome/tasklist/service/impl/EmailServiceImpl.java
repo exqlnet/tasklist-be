@@ -6,6 +6,7 @@ import com.ncuhome.tasklist.repository.UserRepository;
 import com.ncuhome.tasklist.service.EmailService;
 import com.ncuhome.tasklist.util.MailUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -26,7 +27,8 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public Boolean sendVerifyCode(String address) throws MessagingException, UnsupportedEncodingException {
+    @Async
+    public void sendVerifyCode(String address) throws MessagingException, UnsupportedEncodingException {
 //        // 检查用户
 //        User user = userRepository.findByEmail(address);
 //        if(user != null){
@@ -45,7 +47,6 @@ public class EmailServiceImpl implements EmailService {
             EmailSend emailSend = new EmailSend(address, vcode);
             emailSendRepository.save(emailSend);
         }
-        return true;
     }
 
     public static String generateVcode(){

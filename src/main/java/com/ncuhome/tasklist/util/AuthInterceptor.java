@@ -46,12 +46,12 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
-        log.info("{}", handlerMethod.getMethodAnnotation(LoginRequired.class));
+//        log.info("{}", handlerMethod.getMethodAnnotation(LoginRequired.class));
 
         // 判断接口是否需要登录
         LoginRequired methodAnnotation = method.getAnnotation(LoginRequired.class);
-        log.info("{}", method);
-        log.info("{}", methodAnnotation);
+//        log.info("{}", method);
+//        log.info("{}", methodAnnotation);
         if(methodAnnotation==null)return true;
 
         if(currentUser == null){
