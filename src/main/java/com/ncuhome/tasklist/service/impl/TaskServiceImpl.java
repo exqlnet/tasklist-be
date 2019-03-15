@@ -36,6 +36,9 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private HttpServletRequest request;
 
+    @Autowired
+    private User currentUser;
+
     @Override
     public String createTask(CreateTaskForm createTaskForm) throws ParseException{
 
@@ -64,17 +67,9 @@ public class TaskServiceImpl implements TaskService {
         return "添加成功";
     }
 
-    @Override
-    public String modifyTask(ModifyTaskForm modifyTaskForm) {
-        Task task = taskRepository.findByTaskId(modifyTaskForm.getTaskId());
-        if(task == null){
-            throw new TaskException("未找到该任务");
-        }
-        User user = (User)request.getAttribute("user");
-        if(!task.getUser().getUserId().equals(user.getUserId())){
-            throw new TaskException("该任务不属于你");
-        };
 
+    @Override
+    public Boolean modifyTask(Task task, ModifyTaskForm modifyTaskForm) {
         task.setStartTime(modifyTaskForm.getStartTime());
         task.setDescription(modifyTaskForm.getDescription());
         task.setPriority(modifyTaskForm.getPriority());
@@ -82,44 +77,17 @@ public class TaskServiceImpl implements TaskService {
         task.setTitle(modifyTaskForm.getTitle());
         taskRepository.save(task);
 
-        return "保存成功";
-    }
-
-    @Override
-    public Boolean finish(Integer taskId) {
-        Task task = taskRepository.findByTaskId(taskId);
-        if(task == null){
-            throw new TaskException("任务不存在");
-        }
-        User user = (User)request.getAttribute("user");
-        if(!task.getUser().getUserId().equals(user.getUserId())){
-            throw new TaskException("无法修改该任务");
-        }
-
-        task.setIsFinish(1);
-        taskRepository.save(task);
         return true;
     }
 
-    @Override
-    public Boolean unfinish(Integer taskId){
-        Task task = taskRepository.findByTaskId(taskId);
-        if(task == null){
-            throw new TaskException("任务不存在");
-        }
-        User user = (User)request.getAttribute("user");
-        if(!task.getUser().getUserId().equals(user.getUserId())){
-            throw new TaskException("无法修改该任务");
-        }
-
-        task.setIsFinish(0);
-        taskRepository.save(task);
-        return true;
-    }
 
     @Override
     public List<Task> getToday(User user) {
         List<Task> tasks = taskRepository.getTodayTask(user.getUserId());
         return tasks;
+    }
+
+    public Boolean isBTY(Task task){
+        return currentUser.getUserId().equals(task.getUser().getUserId());
     }
 }

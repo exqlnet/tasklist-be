@@ -3,8 +3,10 @@ package com.ncuhome.tasklist.controller.note;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ncuhome.tasklist.VO.ResultVO;
 import com.ncuhome.tasklist.annotations.LoginRequired;
+import com.ncuhome.tasklist.dataobject.Note;
 import com.ncuhome.tasklist.form.NoteForm.CreateNoteForm;
 import com.ncuhome.tasklist.form.NoteForm.ModifyNoteForm;
+import com.ncuhome.tasklist.repository.NoteRepository;
 import com.ncuhome.tasklist.service.NoteService;
 import com.ncuhome.tasklist.service.UserService;
 import com.ncuhome.tasklist.util.BaseController;
@@ -21,6 +23,8 @@ import java.util.Map;
 @RequestMapping("/api/note")
 public class NoteController extends BaseController {
 
+    @Autowired
+    NoteRepository noteRepository;
 
     @Autowired
     UserService userService;
@@ -41,7 +45,8 @@ public class NoteController extends BaseController {
     @LoginRequired
     @PutMapping("/modify")
     public Object modifyNote(@RequestBody ModifyNoteForm modifyNoteForm){
-        noteService.modifyNote(modifyNoteForm);
+        Note note = noteRepository.findByNoteId(modifyNoteForm.getNoteId());
+        noteService.modifyNote(note, modifyNoteForm);
         return resultVOUtil.success("保存成功");
     }
 

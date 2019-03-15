@@ -3,6 +3,7 @@ package com.ncuhome.tasklist.util;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.ncuhome.tasklist.annotations.LoginRequired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,36 +34,32 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     UserService userService;
 
+    @Autowired
+    User currentUser;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // 如果不是映射到方法直接通过
+        if (!(handler instanceof HandlerMethod)) {
+            return true;
+        }
+
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
 
-//        // 获取参数并转化成JsonNode，以便直接在baseController下获取body
-//        String postData = extractPostRequestBody(request);
-//        ObjectMapper mapper = new ObjectMapper();
-//        JsonNode requestBody = mapper.readTree(postData);
-//        request.setAttribute("body", requestBody);
-
-
         // 判断接口是否需要登录
         LoginRequired methodAnnotation = method.getAnnotation(LoginRequired.class);
+        log.info("{}", method);
+        log.info("{}", methodAnnotation);
         if(methodAnnotation==null)return true;
-        User user = userService.verifyToken(request.getHeader("Authorization"));
 
-        if (user == null){unauth(response);return false;}
-
-        request.setAttribute("user", user);
+        if(currentUser == null){
+            unauth(response);
+            return false;
+        }
         return true;
     }
 
-    static String extractPostRequestBody(HttpServletRequest request) throws IOException {
-        if ("POST".equalsIgnoreCase(request.getMethod())) {
-            Scanner s = new Scanner(request.getInputStream(), "UTF-8").useDelimiter("\\A");
-            return s.hasNext() ? s.next() : "";
-        }
-        return "";
-    }
 
     private static void unauth(HttpServletResponse response) throws IOException{
         response.setStatus(401);

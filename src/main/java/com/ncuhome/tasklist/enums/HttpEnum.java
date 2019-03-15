@@ -6,6 +6,10 @@ import lombok.Getter;
 public enum HttpEnum {
     // Other Enums
 
+    // Task Enums
+    TASK_NOT_BTY(403, "该任务不属于你！"),
+    TASK_NOT_FOUND(404, "任务未找到！"),
+
 
     // User Enums
     LOGIN_SUCCESS(200, "登陆成功"),

@@ -3,6 +3,7 @@ package com.ncuhome.tasklist.controller.user;
 import com.ncuhome.tasklist.VO.ResultVO;
 import com.ncuhome.tasklist.VO.UserVO;
 import com.ncuhome.tasklist.annotations.LoginRequired;
+import com.ncuhome.tasklist.dataobject.User;
 import com.ncuhome.tasklist.form.UserForm.ChangePasswordForm;
 import com.ncuhome.tasklist.service.UserService;
 import com.ncuhome.tasklist.util.BaseController;
@@ -25,10 +26,13 @@ public class InfoController extends BaseController {
     @Autowired
     ResultVOUtil resultVOUtil;
 
+    @Autowired
+    private User currentUser;
+
     @PostMapping("/changePassword")
     @LoginRequired
     public ResultVO changePassword(@RequestBody @Valid ChangePasswordForm changePasswordForm){
-        userService.changePassword(getUser(), changePasswordForm);
+        userService.changePassword(currentUser, changePasswordForm);
         return resultVOUtil.success("修改成功");
     }
 
@@ -36,7 +40,7 @@ public class InfoController extends BaseController {
     @GetMapping("/info")
     @LoginRequired
     public ResultVO getInfo(){
-        UserVO userVO = new UserVO(getUser());
+        UserVO userVO = new UserVO(currentUser);
         return resultVOUtil.success(userVO);
     }
 }

@@ -11,7 +11,7 @@ public interface NoteService {
 
     Boolean createNote(CreateNoteForm createNoteForm);
 
-    Boolean modifyNote(ModifyNoteForm modifyNoteForm);
+    Boolean modifyNote(Note note, ModifyNoteForm modifyNoteForm);
 
     Boolean deleteNote(Integer noteId);
 

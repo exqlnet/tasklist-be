@@ -23,6 +23,8 @@ public class NoteServiceImpl implements NoteService {
     @Autowired
     HttpServletRequest request;
 
+    @Autowired
+    User currentUser;
 
     @Override
     public Boolean createNote(CreateNoteForm createNoteForm) {
@@ -34,11 +36,7 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
-    public Boolean modifyNote(ModifyNoteForm modifyNoteForm) {
-        Note note = noteRepository.findByNoteId(modifyNoteForm.getNoteId());
-        if(note == null){
-            throw new TaskException("未找到该便签");
-        }
+    public Boolean modifyNote(Note note, ModifyNoteForm modifyNoteForm) {
         note.setContent(modifyNoteForm.getContent());
         noteRepository.save(note);
         return true;

@@ -24,12 +24,25 @@ public class ResultVOUtil {
         return new ResultVO<>(1, "获取成功", ob);
     }
     public ResultVO fromEnum(HttpEnum httpEnum){
-        response.setStatus(httpEnum.getHttpCode());
-        return new ResultVO<>(1, httpEnum.getMessage(), null);
+        Integer httpCode = httpEnum.getHttpCode();
+        response.setStatus(httpCode);
+        if(httpCode >= 200 && httpCode < 300){
+            return new ResultVO<>(1, httpEnum.getMessage(), null);
+        }
+        else{
+            return new ResultVO<>(0, httpEnum.getMessage(), null);
+        }
     }
     public ResultVO fromEnum(HttpEnum httpEnum, Object object){
-        response.setStatus(httpEnum.getHttpCode());
-        return new ResultVO<>(1, httpEnum.getMessage(), object);
+        Integer httpCode = httpEnum.getHttpCode();
+        response.setStatus(httpCode);
+        if(httpCode >= 200 && httpCode < 300){
+            return new ResultVO<>(1, httpEnum.getMessage(), object);
+        }
+        else{
+            return new ResultVO<>(0, httpEnum.getMessage(), object);
+        }
+
     }
     public static ResultVO success(){
         return new ResultVO<>(1, "操作成功", null);

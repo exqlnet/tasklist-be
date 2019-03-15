@@ -101,10 +101,10 @@ public class UserController extends BaseController {
         */
         User user = userRepository.findByEmail(email);
         if(user == null){
-            return resultVOUtil.fromEnum(HttpEnum.USER_NOT_FOUND);
+            return resultVOUtil.fromEnum(HttpEnum.USER_NOT_FOUND, false);
         }
         else{
-            return resultVOUtil.fromEnum(HttpEnum.USER_EXISTS);
+            return resultVOUtil.fromEnum(HttpEnum.USER_EXISTS, true);
         }
     }
 

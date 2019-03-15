@@ -1,4 +1,15 @@
+
+
 spring:
+  profiles:
+    active: test
+app:
+  secret: 07ab4387efa80cc76b9ab2123cf34bf53b52a6cb
+server:
+  port: 6789
+---
+spring:
+  profiles: prod
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://ds888.tk/tasklist?characterEncoding=utf-8&useSSL=false
@@ -11,7 +22,4 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   application:
     name: ShiXian-TaskList
-app:
-  secret: 07ab4387efa80cc76b9ab2123cf34bf53b52a6cb
-server:
-  port: 6789
+
