@@ -5,4 +5,4 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 
 
-ENTRYPOINT ["java", "-jar", "./target/tasklist-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "/tasklist/target/tasklist-0.0.1-SNAPSHOT.jar"]
