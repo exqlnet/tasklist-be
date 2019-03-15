@@ -3,7 +3,7 @@ package com.ncuhome.tasklist.service.impl;
 import com.ncuhome.tasklist.VO.LoginResult;
 import com.ncuhome.tasklist.dataobject.EmailSend;
 import com.ncuhome.tasklist.dataobject.User;
-import com.ncuhome.tasklist.enums.LoginEnum;
+import com.ncuhome.tasklist.enums.HttpEnum;
 import com.ncuhome.tasklist.form.UserForm.ChangePasswordForm;
 import com.ncuhome.tasklist.form.UserForm.LoginForm;
 import com.ncuhome.tasklist.form.UserForm.RegisterForm;
@@ -11,6 +11,7 @@ import com.ncuhome.tasklist.repository.EmailSendRepository;
 import com.ncuhome.tasklist.repository.UserRepository;
 import com.ncuhome.tasklist.service.UserService;
 import com.ncuhome.tasklist.util.MD5Util;
+import com.ncuhome.tasklist.util.ResultVOUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -36,55 +37,36 @@ public class UserServiceImpl implements UserService {
     @Autowired
     EmailSendRepository emailSendRepository;
 
+    private ResultVOUtil resultUtil = new ResultVOUtil();
+
     @Value("${app.secret}")
     private String secret;
 
+
     @Override
-    public LoginResult login(LoginForm loginForm) {
-        User user = userRepository.findByEmail(loginForm.getEmail());
+    public void changePassword(User user, ChangePasswordForm changePasswordForm) {
 
-        // 用户是否存在
-        if (user == null) throw new UserLoginException(LoginEnum.USER_NOT_FOUND);
-
-        if(checkPassword(user, loginForm.getPassword()))
-        return new LoginResult(generateToken(user));
-        else throw new UserLoginException(LoginEnum.PWD_INCORRECT);
+        user.setPassword(md5Util.md5(changePasswordForm.getPwdNew()));
+        userRepository.save(user);
     }
 
     @Override
-    public String changePassword(User user, ChangePasswordForm changePasswordForm) {
-
-        if(checkPassword(user, changePasswordForm.getPwdBefore())){
-            user.setPassword(changePasswordForm.getPwdNew());
-            userRepository.save(user);
-        }
-        else{
-            throw new UserLoginException(LoginEnum.PWD_BEFORE_INCORRECT);
-        }
-        return "修改成功";
-    }
-
-    @Override
-    public String register(RegisterForm registerForm) {
-        EmailSend emailSend = emailSendRepository.findByEmail(registerForm.getEmail());
-
-        if(emailSend == null){
-            throw new UserRegisterException("error submitted info");
-        }
-
-        if(!registerForm.getVerifyCode().equals(emailSend.getVerifyCode()))
-            throw new UserRegisterException("验证码错误");
+    public User register(RegisterForm registerForm) {
 
         User user = new User(registerForm.getEmail(), registerForm.getPassword());
 
-        emailSendRepository.delete(emailSend);
         userRepository.save(user);
-
-        return "注册成功";
+        emailSendRepository.deleteByEmail(registerForm.getEmail());
+        return user;
     }
 
-    public Boolean checkPassword(User user, String pwd){
-        return md5Util.md5(pwd).equals(user.getPassword());
+    public String checkPassword(User user, String pwd){
+        if(md5Util.md5(pwd).equals(user.getPassword())){
+            return generateToken(user);
+        }
+        else{
+            return null;
+        }
     }
 
     public String generateToken(User user){

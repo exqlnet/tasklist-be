@@ -12,8 +12,6 @@ public interface TaskService {
 
     public String createTask(CreateTaskForm createTaskForm) throws ParseException;
 
-    public String deleteTask(Integer taskId);
-
     public String modifyTask(ModifyTaskForm modifyTaskForm);
 
     public Boolean finish(Integer taskId);

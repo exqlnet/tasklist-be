@@ -65,20 +65,6 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public String deleteTask(Integer taskId) {
-        Task task = taskRepository.findByTaskId(taskId);
-        if(task == null){
-            throw new TaskException("未找到该任务");
-        }
-        User user = (User)request.getAttribute("user");
-        if(!task.getUser().getUserId().equals(user.getUserId())){
-            throw new TaskException("该任务不属于你");
-        };
-        taskRepository.delete(task);
-        return "删除成功";
-    }
-
-    @Override
     public String modifyTask(ModifyTaskForm modifyTaskForm) {
         Task task = taskRepository.findByTaskId(modifyTaskForm.getTaskId());
         if(task == null){

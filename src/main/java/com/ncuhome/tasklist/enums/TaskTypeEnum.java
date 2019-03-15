@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 
 @Getter
-public enum TaskTypeEnum {
+public enum TaskTypeEnum{
     ONCE(1, "无循环"),
     DAY(2, "每天"),
     WEEK(3, "每周"),

@@ -4,11 +4,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.google.gson.JsonObject;
 import com.ncuhome.tasklist.VO.LoginResult;
 import com.ncuhome.tasklist.VO.ResultVO;
+import com.ncuhome.tasklist.dataobject.EmailSend;
 import com.ncuhome.tasklist.dataobject.User;
+import com.ncuhome.tasklist.enums.HttpEnum;
 import com.ncuhome.tasklist.form.UserForm.ChangePasswordForm;
 import com.ncuhome.tasklist.form.UserForm.LoginForm;
 import com.ncuhome.tasklist.form.UserForm.RegisterForm;
 import com.ncuhome.tasklist.form.UserForm.SendVcodeForm;
+import com.ncuhome.tasklist.repository.EmailSendRepository;
 import com.ncuhome.tasklist.repository.UserRepository;
 import com.ncuhome.tasklist.service.EmailService;
 import com.ncuhome.tasklist.service.UserService;
@@ -43,10 +46,21 @@ public class UserController extends BaseController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    EmailSendRepository emailSendRepository;
+
     @PostMapping("/login")
-    public ResultVO<LoginResult> login(@RequestBody @Valid LoginForm loginForm){
-        LoginResult loginResult = userService.login(loginForm);
-        return resultVOUtil.success(loginResult);
+    public ResultVO login(@RequestBody @Valid LoginForm loginForm){
+        // 寻找用户
+        User user = userRepository.findByEmail(loginForm.getEmail());
+        if(user == null){return resultVOUtil.fromEnum(HttpEnum.USER_NOT_FOUND);}
+
+        // 验证密码
+        String token = userService.checkPassword(user, loginForm.getPassword());
+        if(token == null){return resultVOUtil.fromEnum(HttpEnum.PWD_INCORRECT);}
+
+        // 返回Token
+        return resultVOUtil.fromEnum(HttpEnum.LOGIN_SUCCESS, token);
     }
 
     @PostMapping("/sendVcode")
@@ -69,8 +83,14 @@ public class UserController extends BaseController {
 
     @PostMapping("/register")
     public Object registerAccount(@RequestBody @Valid RegisterForm registerForm){
-        String result = userService.register(registerForm);
-        return resultVOUtil.success(result);
+
+        EmailSend emailSend = emailSendRepository.findByEmail(registerForm.getEmail());
+        if(emailSend == null || (!emailSend.getVerifyCode().equals(registerForm.getVerifyCode()))){
+            return resultVOUtil.fromEnum(HttpEnum.CODE_VERIFY_FAILD);
+        }
+
+        User user = userService.register(registerForm);
+        return resultVOUtil.fromEnum(HttpEnum.REGISTER_SUCCESS, user.getEmail());
     }
 
     @GetMapping("/exist")
@@ -81,10 +101,10 @@ public class UserController extends BaseController {
         */
         User user = userRepository.findByEmail(email);
         if(user == null){
-            return resultVOUtil.error("未找到用户");
+            return resultVOUtil.fromEnum(HttpEnum.USER_NOT_FOUND);
         }
         else{
-            return resultVOUtil.success("用户存在");
+            return resultVOUtil.fromEnum(HttpEnum.USER_EXISTS);
         }
     }
 
@@ -99,13 +119,13 @@ public class UserController extends BaseController {
         Map<String, Object> body = JsonUtil.gson.fromJson(jsonString, HashMap.class);
         User user = userRepository.findByEmail((String) body.get("email"));
         if(user == null){
-            return resultVOUtil.error("用户未找到，请检查邮箱是否正确。");
+            return resultVOUtil.fromEnum(HttpEnum.USER_NOT_FOUND);
         }
         String vcode = (String)body.get("verifyCode");
         String newPwd = (String)body.get("newPassword");
         String vcode_c = userService.getVerifyCode(user.getEmail());
         if(!vcode.equals(vcode_c)){
-            return resultVOUtil.error("验证码错误");
+            return resultVOUtil.fromEnum(HttpEnum.CODE_VERIFY_FAILD);
         }
         else{
             userService.changePwd(user, newPwd);

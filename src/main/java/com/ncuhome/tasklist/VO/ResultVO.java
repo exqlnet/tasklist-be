@@ -1,6 +1,10 @@
 package com.ncuhome.tasklist.VO;
 
+import com.ncuhome.tasklist.enums.HttpEnum;
 import lombok.Data;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 @Data
 public class ResultVO<T> {
