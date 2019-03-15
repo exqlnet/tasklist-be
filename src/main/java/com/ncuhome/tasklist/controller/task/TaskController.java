@@ -51,7 +51,7 @@ public class TaskController extends BaseController {
     @PostMapping("/create")
     public Object createTask(@RequestBody @Valid CreateTaskForm createTaskForm) throws ParseException {
         taskService.createTask(createTaskForm);
-        return resultVOUtil.success("创建成功");
+        return resultVOUtil.success(HttpEnum.TASK_CREATE_SUCCESS);
     }
 
     @LoginRequired
@@ -66,7 +66,7 @@ public class TaskController extends BaseController {
             return resultVOUtil.fromEnum(HttpEnum.TASK_NOT_BTY);
 
         taskRepository.delete(task);
-        return resultVOUtil.success("删除成功");
+        return resultVOUtil.success(HttpEnum.TASK_DELETE_SUCCESS);
     }
 
     @LoginRequired
@@ -82,7 +82,7 @@ public class TaskController extends BaseController {
             return resultVOUtil.fromEnum(HttpEnum.TASK_NOT_BTY);
         }
         taskService.modifyTask(task, modifyTaskForm);
-        return resultVOUtil.success("修改成功");
+        return resultVOUtil.success(HttpEnum.TASK_MODIFY_SUCCESS);
     }
 
     @GetMapping("/list")
@@ -116,7 +116,7 @@ public class TaskController extends BaseController {
 
         task.setIsFinish(1);
         taskRepository.save(task);
-        return resultVOUtil.success("任务已完成");
+        return resultVOUtil.success(HttpEnum.TASK_FINISH);
     }
 
     @LoginRequired
@@ -132,7 +132,7 @@ public class TaskController extends BaseController {
         }
         task.setIsFinish(0);
         taskRepository.save(task);
-        return resultVOUtil.success("取消完成");
+        return resultVOUtil.success(HttpEnum.TASK_UNFINISH);
     }
 
     @LoginRequired

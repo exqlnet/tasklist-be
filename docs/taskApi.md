@@ -3,7 +3,9 @@
 ### 创建任务
 ### URL: /api/task/create
 ### METHOD: post
-* 参数
+
+* 参数（*号为必填）
+
 ```json
 {
   "title": "*任务标题",
@@ -16,11 +18,12 @@
 ```
 
 * 成功返回
+
 ```json
 {
   "code": 1,
-  "msg": "成功",
-  "data": "创建成功"
+  "msg": "任务创建成功",
+  "data": null
 }
 ```
 
@@ -30,6 +33,7 @@
 ### METHOD: delete
 
 * 参数
+
 ```json
 {
   "taskId": "任务Id"
@@ -37,11 +41,12 @@
 ```
 
 * 成功返回
+
 ```json
 {
   "code": 1,
-  "msg": "成功",
-  "data": "删除成功"
+  "msg": "任务删除成功",
+  "data": null
 }
 ```
 
@@ -50,6 +55,7 @@
 ### METHOD: put
 
 * 参数
+
 ```json
 {
   "taskId": "任务ID",
@@ -63,11 +69,12 @@
 ```
 
 * 成功返回
+
 ```json
 {
   "code": 1,
-  "msg": "成功",
-  "data": "保存成功"
+  "msg": "任务修改成功",
+  "data": null
 }
 ```
 
@@ -80,7 +87,7 @@
 ```json
 {
   "code": 1,
-  "msg": "成功",
+  "msg": "获取成功",
   "data": [
     {
       "taskId": "任务Id",
@@ -103,7 +110,9 @@
 ### 获取当天任务
 ### URL: /api/task/today
 ### METHOD: get
+
 * 成功返回
+
 ```json
 {
   "code": 1,
@@ -130,7 +139,9 @@
 ### 取消完成任务
 ### URL: /api/task/unfinish
 ### METHOD: post
+
 * 参数
+
 ```json
 {
   "taskId": "任务ID"
@@ -138,6 +149,7 @@
 ```
 
 * 成功返回
+
 ```json
 {
   "code": 1,

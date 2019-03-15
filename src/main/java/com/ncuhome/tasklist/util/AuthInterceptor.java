@@ -46,6 +46,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
+        log.info("{}", handlerMethod.getMethodAnnotation(LoginRequired.class));
 
         // 判断接口是否需要登录
         LoginRequired methodAnnotation = method.getAnnotation(LoginRequired.class);
@@ -66,8 +67,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         response.setHeader("Content-Type", "application/json");
         response.setCharacterEncoding("UTF-8");
         Map<String, Object> body = new HashMap<>();
-        body.put("code", 401);
-        body.put("msg", "Unauthorized token");
+        body.put("status", 401);
+        body.put("message", "Unauthorized token");
         response.getWriter().write(JsonUtil.gson.toJson(body));
     }
 }

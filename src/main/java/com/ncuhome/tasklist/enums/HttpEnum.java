@@ -9,6 +9,11 @@ public enum HttpEnum {
     // Task Enums
     TASK_NOT_BTY(403, "该任务不属于你！"),
     TASK_NOT_FOUND(404, "任务未找到！"),
+    TASK_FINISH(200, "任务已完成"),
+    TASK_UNFINISH(200, "取消完成任务"),
+    TASK_MODIFY_SUCCESS(200, "任务修改成功"),
+    TASK_DELETE_SUCCESS(200,"任务删除成功"),
+    TASK_CREATE_SUCCESS(200, "任务创建成功"),
 
 
     // User Enums
@@ -19,7 +24,8 @@ public enum HttpEnum {
     PWD_INCORRECT(403, "密码错误"),
     USER_NOT_AUTH(403, "未认证"),
     PWD_BEFORE_INCORRECT(403, "原密码错误"),
-    CODE_VERIFY_FAILD(403, "邮箱验证失败");
+    CODE_VERIFY_FAILED(403, "邮箱验证失败"),
+    PWD_RESET_SUCCESS(200, "密码重置成功");
 
     private Integer httpCode;
 

@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class UserVO {
 
-    @JsonProperty("user_id")
+    @JsonProperty("userId")
     private Integer userId;
 
     @JsonProperty("email")
@@ -16,7 +16,7 @@ public class UserVO {
     @JsonProperty("description")
     private String description;
 
-    @JsonProperty("avatar_url")
+    @JsonProperty("avatarUrl")
     private String avatarUrl;
 
     public UserVO(User user){

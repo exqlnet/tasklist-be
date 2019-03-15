@@ -60,7 +60,9 @@ public class UserController extends BaseController {
         if(token == null){return resultVOUtil.fromEnum(HttpEnum.PWD_INCORRECT);}
 
         // 返回Token
-        return resultVOUtil.fromEnum(HttpEnum.LOGIN_SUCCESS, token);
+        Map<String, String> data = new HashMap<>();
+        data.put("token", token);
+        return resultVOUtil.fromEnum(HttpEnum.LOGIN_SUCCESS, data);
     }
 
     @PostMapping("/sendVcode")
@@ -86,7 +88,7 @@ public class UserController extends BaseController {
 
         EmailSend emailSend = emailSendRepository.findByEmail(registerForm.getEmail());
         if(emailSend == null || (!emailSend.getVerifyCode().equals(registerForm.getVerifyCode()))){
-            return resultVOUtil.fromEnum(HttpEnum.CODE_VERIFY_FAILD);
+            return resultVOUtil.fromEnum(HttpEnum.CODE_VERIFY_FAILED);
         }
 
         User user = userService.register(registerForm);
@@ -125,11 +127,11 @@ public class UserController extends BaseController {
         String newPwd = (String)body.get("newPassword");
         String vcode_c = userService.getVerifyCode(user.getEmail());
         if(!vcode.equals(vcode_c)){
-            return resultVOUtil.fromEnum(HttpEnum.CODE_VERIFY_FAILD);
+            return resultVOUtil.fromEnum(HttpEnum.CODE_VERIFY_FAILED);
         }
         else{
             userService.changePwd(user, newPwd);
-            return resultVOUtil.success("密码重置成功");
+            return resultVOUtil.success(HttpEnum.PWD_RESET_SUCCESS);
         }
 
     }
