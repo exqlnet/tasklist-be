@@ -5,7 +5,11 @@ import com.ncuhome.tasklist.repository.EmailSendRepository;
 import com.ncuhome.tasklist.repository.UserRepository;
 import com.ncuhome.tasklist.service.EmailService;
 import com.ncuhome.tasklist.util.MailUtil;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.jca.context.SpringContextResourceAdapter;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +17,7 @@ import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
 
 @Service
+@Log4j2
 public class EmailServiceImpl implements EmailService {
 
     @Autowired
@@ -20,6 +25,9 @@ public class EmailServiceImpl implements EmailService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Value("${spring.profiles.active}")
+    private String profile;
 
     @Override
     public Boolean sendEmail(String address, String content) {
@@ -35,6 +43,12 @@ public class EmailServiceImpl implements EmailService {
 //            throw new UserRegisterException("用户已存在");
 //        }
         String vcode = generateVcode();
+
+        log.info(profile);
+        if(profile.equals("test")){
+            vcode = "123456";
+            log.info(vcode);
+        }
         // 检查邮件格式并发送邮件
         MailUtil.sendMail(address, "验证码 - 时现", vcode);
         // 将验证码存入数据库

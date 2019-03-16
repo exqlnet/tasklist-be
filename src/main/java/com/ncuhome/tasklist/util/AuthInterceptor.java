@@ -54,7 +54,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 //        log.info("{}", methodAnnotation);
         if(methodAnnotation==null)return true;
 
-        if(currentUser == null){
+        if(currentUser.getUserId() == null){
             unauth(response);
             return false;
         }

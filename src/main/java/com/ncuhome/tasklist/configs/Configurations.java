@@ -59,7 +59,11 @@ public class Configurations implements WebMvcConfigurer {
     @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
     public User currentUser(HttpServletRequest httpServletRequest, UserService userService){
         String token = httpServletRequest.getHeader("Authorization");
-        return userService.verifyToken(token);
+        User currentUser = userService.verifyToken(token);
+        if(currentUser == null){
+            currentUser = new User();
+        }
+        return currentUser;
     }
 
 //    @Bean
