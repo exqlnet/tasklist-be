@@ -5,8 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - .:/tasklist
     ports:
       - "6789:6789"
 #  tasklist:
