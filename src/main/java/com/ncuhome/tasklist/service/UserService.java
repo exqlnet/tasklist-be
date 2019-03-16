@@ -23,4 +23,5 @@ public interface UserService {
 
     Boolean changePwd(User user, String newPwd);
 
+    String generateToken(User user);
 }

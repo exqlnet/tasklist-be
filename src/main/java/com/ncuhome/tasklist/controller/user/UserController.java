@@ -92,7 +92,9 @@ public class UserController extends BaseController {
         }
 
         User user = userService.register(registerForm);
-        return resultVOUtil.fromEnum(HttpEnum.REGISTER_SUCCESS, user.getEmail());
+        Map<String, String> data = new HashMap<>();
+        data.put("token", userService.generateToken(user));
+        return resultVOUtil.fromEnum(HttpEnum.REGISTER_SUCCESS, data);
     }
 
     @GetMapping("/exist")
