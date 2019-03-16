@@ -34,4 +34,5 @@ docker-compose up -d
 * 统一异常处理/优化异常处理
 * 创建匿名用户类
 * 松耦合: 优化Controller/Service
+* 使用Redis解决验证码储存问题
 * ...
