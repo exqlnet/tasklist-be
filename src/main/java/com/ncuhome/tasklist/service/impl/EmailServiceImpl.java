@@ -37,20 +37,14 @@ public class EmailServiceImpl implements EmailService {
     @Override
     @Async
     public void sendVerifyCode(String address) throws MessagingException, UnsupportedEncodingException {
-//        // 检查用户
-//        User user = userRepository.findByEmail(address);
-//        if(user != null){
-//            throw new UserRegisterException("用户已存在");
-//        }
         String vcode = generateVcode();
 
         log.info(profile);
         if(profile.equals("test")){
             vcode = "123456";
-            log.info(vcode);
+//            log.info(vcode);
         }
-        // 检查邮件格式并发送邮件
-        MailUtil.sendMail(address, "验证码 - 时现", vcode);
+
         // 将验证码存入数据库
         EmailSend check = emailSendRepository.findByEmail(address);
         if (check != null){
@@ -61,6 +55,8 @@ public class EmailServiceImpl implements EmailService {
             EmailSend emailSend = new EmailSend(address, vcode);
             emailSendRepository.save(emailSend);
         }
+        // 检查邮件格式并发送邮件
+        MailUtil.sendMail(address, "验证码 - 时现", vcode);
     }
 
     public static String generateVcode(){
